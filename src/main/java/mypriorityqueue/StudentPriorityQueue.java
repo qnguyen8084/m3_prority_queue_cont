@@ -7,6 +7,6 @@ public class StudentPriorityQueue extends MyPriorityQueue<Student> {
     // Constructor for PriorityQueue class
 
     public void printOutput(Student priorityStudent) {
-        System.out.println("name: " + priorityStudent.name + " redID: " + priorityStudent.redID
-                + " priority: " + priorityStudent.priority);    }
+        priorityStudent.printStudent();
+    }
 }

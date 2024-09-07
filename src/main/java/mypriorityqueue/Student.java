@@ -41,7 +41,7 @@ public class Student implements Comparable<Student> {
 
     // Method to print a name and redID of Student object.
     void printStudent() {
-        System.out.println("Name: " + this.name + " redID: " + this.redID);
+        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.priority);
     }
 
     public int compareTo(Student s) {
