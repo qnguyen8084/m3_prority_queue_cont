@@ -1,0 +1,12 @@
+package mypriorityqueue;
+
+import java.util.ArrayList;
+
+public class StudentPriorityQueue extends MyPriorityQueue<Student> {
+    // Declare a ArrayList object, students
+    // Constructor for PriorityQueue class
+
+    public void printOutput(Student priorityStudent) {
+        System.out.println("name: " + priorityStudent.name + " redID: " + priorityStudent.redID
+                + " priority: " + priorityStudent.priority);    }
+}
