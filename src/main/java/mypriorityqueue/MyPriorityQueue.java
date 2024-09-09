@@ -105,9 +105,13 @@
  *    the whole priority queue. My implementation requires the creation of a new priority queue object that will be
  *    filled up as elements from the original queue are retrieved for printing, adding the data to a new element in
  *    the new queue, and then removing root from the original queue to get the next priority item moved to the root.
+ *    The print methods also exhibits the use of polymorphism with the overriding of the print method.
  *
  *    7. Custom Priority Queue Implementation: Will be judged by professor, but I did my best to use appropriate data
  *    structures and efficient algorithms.
+ *
+ *
+ *
  *
  */
 
@@ -115,9 +119,13 @@ package mypriorityqueue;
 
 import java.util.ArrayList;
 
-// Declaration of PriorityQueue class that is implemented using a binary max heap
+// Declaration of PriorityQueue class that is implemented using MaxBinaryHeap using ArrayList
+// I incorporate the use of generics here to allow StudentPriorityClass to promote inheritance as well as
+// reusability and extensibility.
 public class MyPriorityQueue<T extends Comparable<? super T>> {
     // Declare a ArrayList object, students
+    // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
+    // array dynamically.
     public ArrayList<T> queueObject;
 
     // Constructor for PriorityQueue class
@@ -135,33 +143,36 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         }
     }
 
-    // This method returns the entry at root with the highest priority. It first copies the entry to a temporary Student
-    // object, then it sets the last entry to the first entry, removes the last entry, performs sink method on new root
-    // entry, and then returns the Student object that was originally removed from root.
-    public T removeRoot() {
-        T root = queueObject.getFirst();
+    // This method removes the root by swapping the root with last element at end of queue then applying sink method
+    // on root node.
+    public void removeRoot() {
         queueObject.set(0, queueObject.getLast());
         queueObject.removeLast();
         sink();
-        return root;
     }
 
+    // Returns the highest priority element located at root.
     public T getRoot() {
         return queueObject.getFirst();
     }
 
     // Method to print all Student object entries contained in the heap
+    // Makes a copy of heap node by node as each element is printed.
+    // Add root element to temp queue, print element, then remove root to get next priority element.
+    // Repeat until queue is empty then assign queueObject, temp.
     public void printQueuePriorities() {
         MyPriorityQueue<T> temp = new MyPriorityQueue<>();
         T root;
         while (!queueObject.isEmpty()) {
-            root = removeRoot();
+            root = queueObject.getFirst();
             temp.insertObject(root);
             printOutput(root);
+            removeRoot();
         }
         System.out.println();
         queueObject = temp.queueObject;
     }
+
 
     public void printOutput(T root) {
         System.out.println(root);
@@ -192,8 +203,8 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         queueObject.set(IndexB, temp);
     }
 
-    // This method is to raise a new entry added to the heap that is always added to the end to its correct place in
-    // the heap by swapping with parent entries that have a lower priority.
+    // This method is to raise a new element added to the end of the tree to reach its correct position in the
+    // priority queue.
     public void raise() {
         int arrayIndex = queueObject.size() - 1;
         while (arrayIndex > 0
@@ -203,11 +214,11 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         }
     }
 
-
-
     // Method to sink an entry to it's correct place in the heap. This method is used when removing the highest priority
-    // entry from root by swapping the highest priority entry with the last entry in the heap, removing the last entry which
-    // was the highest priority entry, then using this sink method on the entry now located at the root of the heap.
+    // entry from root. By swapping the highest priority entry with the last entry in the heap, removing the last entry which
+    // was the highest priority entry, then using this sink method on the entry now located at the root of the heap it
+    // ensures that the heap retains the heap property where the child nodes will always have a lower priority than
+    // the parent nodes.
     public void sink() {
         int arraySize = queueObject.size();
         int index = 0;
