@@ -5,6 +5,8 @@
  * 9/9/24
  */
 
+
+
 package mypriorityqueue;
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>>{
     // Method to obtain index of parent node which is used to raise or float student objects to their correct
     // place in the heap
     static int getParentIndex(int currentIndex) {
-        return (currentIndex) / 2;
+        return (currentIndex -1) / 2;
     }
 
     // Method to obtain the index of the left child of a parent located at currentIndex
@@ -64,22 +66,6 @@ public class MyPriorityQueue<T extends Comparable<? super T>>{
         return root;
     }
 
-    // Method to print all Student object entries contained in the heap
-    public void printQueueElements() {
-        MyPriorityQueue<T> temp = new MyPriorityQueue<>();
-        T root;
-        while (!queueObject.isEmpty()) {
-            root = removeRoot();
-            temp.insertObject(root);
-            printOutput(root);
-        }
-        queueObject = temp.queueObject;
-    }
-
-    public void printOutput(T root) {
-        System.out.println("priority " + root);
-    }
-
     // This method is to raise a new entry added to the heap that is always added to the end to its correct place in
     // the heap by swapping with parent entries that have a lower priority.
     public void raise() {
@@ -116,6 +102,22 @@ public class MyPriorityQueue<T extends Comparable<? super T>>{
                 break;
             }
         }
+    }
+
+    // Method to print all Student object entries contained in the heap
+    public void printQueueElements() {
+        MyPriorityQueue<T> temp = new MyPriorityQueue<>();
+        T root;
+        while (!queueObject.isEmpty()) {
+            root = removeRoot();
+            temp.insertObject(root);
+            printOutput(root);
+        }
+        queueObject = temp.queueObject;
+    }
+
+    public void printOutput(T root) {
+        System.out.print(root + ", ");
     }
 
 }

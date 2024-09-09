@@ -23,6 +23,14 @@ public class Student implements Comparable<Student> {
         this.redID = redID;
         this.email = email;
         this.gpa = gpa;
+        if (this.gpa < 0F || this.gpa > 4.0F) {
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("GPA must not be smaller than 0 or greater than 4.");
+                throw new RuntimeException(e);
+            }
+        }
         this.unitsTaken = unitsTaken;
         // Calls the calculatePriority method to assign the value for priority of Student object.
         this.priority = calculatePriority(this.gpa, this.unitsTaken);
