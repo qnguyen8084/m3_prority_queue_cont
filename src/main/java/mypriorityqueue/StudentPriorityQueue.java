@@ -7,4 +7,9 @@ public class StudentPriorityQueue extends MyPriorityQueue<Student> {
     public void printOutput(Student priorityStudent) {
         priorityStudent.printStudent();
     }
+
+    public float calculatePriority(Student priorityStudent) {
+        return priorityStudent.gpa * 0.3F + priorityStudent.unitsTaken * 0.7F;
+    }
+
 }

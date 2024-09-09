@@ -16,16 +16,17 @@ public class Main {
         StudentPriorityQueue studentList2;
         studentList2 = new StudentPriorityQueue();
         int input;
-        for (int i = 0; i < 1000; i++) {
-            input = (int)(Math.random()*100)+1;
-            studentList.insertObject(input);
+        for (int i = 0; i < 5; i++) {
+            //input = (int)(Math.random()*100)+1;
+            //studentList.insertObject(input);
+            studentList.insertObject(i);
         }
 
         studentList.insertObject(2);
         studentList.insertObject(3);
         studentList.insertObject(1);
         studentList.insertObject(5);
-        studentList.printQueueElements();
+        studentList.printQueuePriorities();
 
         studentList2.insertObject(adam);
         studentList2.insertObject(bob);
@@ -33,7 +34,7 @@ public class Main {
         studentList2.insertObject(hanna);
         studentList2.insertObject(jesse);
 
-        studentList2.printQueueElements();
+        studentList2.printQueuePriorities();
 
     }
 }

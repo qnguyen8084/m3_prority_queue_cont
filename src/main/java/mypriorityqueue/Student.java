@@ -14,7 +14,6 @@ public class Student implements Comparable<Student> {
     String email;
     float gpa;
     int unitsTaken;
-    float priority;
 
     // Constructor for Student class
     public Student(String name, int redID, String email, float gpa, int unitsTaken) {
@@ -27,32 +26,39 @@ public class Student implements Comparable<Student> {
             try {
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("GPA must not be smaller than 0 or greater than 4.");
+                System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");
                 throw new RuntimeException(e);
             }
         }
         this.unitsTaken = unitsTaken;
-        // Calls the calculatePriority method to assign the value for priority of Student object.
-        this.priority = calculatePriority(this.gpa, this.unitsTaken);
+        if (this.unitsTaken < 0 || this.unitsTaken > 150) {
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     // Method definition to calculatePriority from gpa and unitsTaken.
     // Assignment requirements define priority as the sum of 30% of GPA and 70% of unitsTaken.
-    public float calculatePriority(float gpa, int unitsTaken) {
-        return gpa * 0.3F + unitsTaken * 0.7F;
+    public float calculatePriority() {
+        return this.gpa * 0.3F + this.unitsTaken * 0.7F;
     }
 
     // Method to return value for priority when called.
     public float getPriority() {
-        return this.priority;
+        return calculatePriority();
     }
 
     // Method to print a name and redID of Student object.
     void printStudent() {
-        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.priority);
+        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());
     }
 
     public int compareTo(Student s) {
-        return Float.compare(this.priority, s.priority);
+        float priority = this.gpa * 0.3F + this.unitsTaken * 0.7F;
+        return Float.compare(priority, s.getPriority());
     }
 }

@@ -1,17 +1,48 @@
 package mypriorityqueue;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MyPriorityQueueTest {
-
-    @BeforeEach
+    static MyPriorityQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();
+/*
+    @BeforeAll
     void setUp() {
+        myPriorityQueue = new MyPriorityQueue<>();
     }
 
     @AfterEach
     void tearDown() {
+    }
+*/
+    @Test
+    void insertObject() {
+        int input;
+        for (int i = 0; i < 100; i++) {
+            input = (int)(Math.random()*100)+1;
+            myPriorityQueue.insertObject(input);
+        }
+        myPriorityQueue.printQueuePriorities();
+    }
+
+    @Test
+    void removeRootTest() {
+        myPriorityQueue.removeRoot();
+        myPriorityQueue.printQueuePriorities();
+    }
+
+    @Test
+    void getRoot() {
+        System.out.println(myPriorityQueue.getRoot());
+    }
+    @Test
+
+    void printQueuePriorities() {
+        myPriorityQueue.printQueuePriorities();
+    }
+
+    @Test
+    void printOutput() {
+        printQueuePriorities();
     }
 
     @Test
@@ -36,25 +67,5 @@ class MyPriorityQueueTest {
 
     @Test
     void sink() {
-    }
-
-    @Test
-    void insertRecord() {
-    }
-
-    @Test
-    void removeTopPriority() {
-    }
-
-    @Test
-    void getTopPriority() {
-    }
-
-    @Test
-    void printTopPriority() {
-    }
-
-    @Test
-    void printStudentPriorities() {
     }
 }
