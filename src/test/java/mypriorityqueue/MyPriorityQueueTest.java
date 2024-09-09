@@ -3,20 +3,21 @@ package mypriorityqueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
     public MyPriorityQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();
 
-    @BeforeEach
-
     @Test
      void insertObjectTest() {
-        int input;
-        for (int i = 0; i <= 10; i++) {
+        int count = 0;
+        for (int i = 0; i < 100; i++) {
             //input = (int)(Math.random()*100)+1;
             myPriorityQueue.insertObject(i);
+            count++;
         }
-        myPriorityQueue.printQueuePriorities();
-
+        System.out.println(myPriorityQueue.queueObject.size());
+        assertEquals(count, myPriorityQueue.queueObject.size());
     }
 
     @Test

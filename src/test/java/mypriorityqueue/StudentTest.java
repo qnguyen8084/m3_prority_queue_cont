@@ -1,17 +1,24 @@
 package mypriorityqueue;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
 
     Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120);
-    Student jesse = new Student("jesse", 1234, "hanna@sdsu.edu", 3.3F, 120);
+    Student jesse = new Student("jesse", 1234, "jesse@sdsu.edu", 3.3F, 120);
     Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120);
     Student bob = new Student("bob", 123, "bob@sdsu.edu", 3.3F, 121);
     Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120);
+
 
     // Test to check priority calculation of Student object
     @Test
