@@ -10,7 +10,7 @@
  *  assignment. There are also comments in the code to clarify what was done if the logic may take more effort to
  *  comprehend.
  *
- *  1. Algorithm Efficiency : I choose to go with a binary heap implementation because it is more efficient than an
+ *  1. Algorithm Efficiency: I choose to go with a binary heap implementation because it is more efficient than an
  *  array or linked list implementation of a priority queue. Without going into detail of the implementations of
  *  priority queues using an array or linked list has a time complexity of O(n) for certain operations. For a binary
  *  heap the operation to add and remove the root which contains the high priority object is O(log_n) because as the
@@ -25,9 +25,12 @@
  *  raise method to find its respective place in the heap. The raise method compares the parent node and if the priority
  *  of the parent node is less than the priority of the element to be added they will have there positions in the heap
  *  swapped. This goes on until the priority of the parent node of the element added is either greater than or equal to
- *  the element being added or the element being added has reached the root. This also conserves a priority for objects
+ *  the element being added or the element being added has reached the root. This also conserves the priority for objects
  *  with the same priority value in the order they were added to the head since the elements are not swapped when
- *  the comparison between the added element and it's parent is equal.
+ *  the comparison between the priorities of the added element, and it's parent is equal. The time complexity of this
+ *  method is at most O(log_n) since the element only needs to traverse from the bottom of the tree to the root through
+ *  its parent node.
+ *
  *     public void insertObject(T element) {
  *       queueObject.add(element);
  *      if (queueObject.size() > 1) {
@@ -35,8 +38,76 @@
  *       }
  *      }
  *
+ *  * Returning element with the highest priority: To retrieve the element with the highest priority we would simply
+ *  look at the root node since it will always contain the element with the highest priority. This operation gives has
+ *  a time complexity of O(1).
  *
- *  2.
+ *     public T getRoot() {
+ *      return queueObject.getFirst();
+ *  }
+ *
+ *  * Removing element with the highest priority: To remove the element with the highest priority we would first
+ *  replace the element at the end of the heap with the root. Then we would run a sink operation on the root node to
+ *  place that element in its correct position in the tree. This is done in the following order.
+ *  while index is smaller than array size assign left child the as the higher priority child
+ *  if the right child exists then compare the left and right child and assign the one with higher priority higherprioritychild
+ *  then the higherprioritychild is higher than the element priority swap the two elements positions in the heap and
+ *  continue until element is in the correct place or at the end of the heap. To conserve the priority of elements of
+ *  the same priority added if the priority of the two elements is equal than swap the elements. This is because the
+ *  element was originally located at the end of the heap suggesting it added after the parent node due to the logic of
+ *  the raise method used when adding an element. The time complexity of this operation is at most O(log_n) since it
+ *  it only has to traverse down the nodes of the tree when placing the last element that was set moved to root to
+ *  its correct place in the heap.
+ *
+ *     public T removeRoot() {
+ *       T root = queueObject.getFirst();
+ *       queueObject.set(0, queueObject.getLast());
+ *       queueObject.removeLast();
+ *       sink();
+ *       return root;
+ *   }
+ *
+ *  * Time complexities
+ *    Insert element - O(log_n)
+ *    return root - O(1)
+ *    remove root - O(log_n)
+ *
+ *   2. Object-Oriented Design:
+ *   * Implement priority queue capable of holding student objects: My design follows a few design patterns. It mostly
+ *   used behavioral pattern where I have an interface that interacts with a priorityQueue object. I'm not too savvy on
+ *   the particulars of individual behavioral design pattern names, but I feel like this fits the bill. The priority
+ *   queue class abstracts the way it adds elements, removes elements, returns the root, and prints out the queue.
+ *   My implementation of the priority queue also allows inheritance with the use of generics allowing it to be used
+ *   with different data types or class objects. I have also defined another priority queue class named StudentPriorityQueue
+ *   which specifies that the queue will be using the Student class as it's data type.
+ *
+ *   * Define a student with class attributes; name, redID, email, gpa (0-4.0), and units taken (0-150): I created a
+ *   student class with the specified requirements. In the class I defined the constructor and added data validation
+ *   for gpa and units taken. I may be able to add more for name, redID, and email if time allows. The class also
+ *   includes methods the calculates and returns a student's priority value. It also has a method for what to print out
+ *   to console if requested.
+ *
+ *   * Design the priority queue operations to work seamlessly with the student class: This is enabled by the
+ *   implementation of the priority queue class to use generics instead of a single data type. Creating another
+ *   priority class, StudentPriorityQueue, that extends MyPriorityQueue, but with the data type specified as Student
+ *   objects. The key part of having the Student class work seamlessly with the priority queue class is the override
+ *   implementation of the compareTwo function which is used in the raise and sink operations.
+ *
+ *   3. Testing Practices: TBC
+ *
+ *   4. Code Quality: Judged by professor
+ *
+ *   5. Priority Calculation for Students:
+ *      (gpa * 0.3 + unitsTaken * 0.70)
+ *      Implemented in both student class and priority queue
+ *
+ *    6. Printing in priority order: Printing in priority order was a challenge to figure out a way without cloning
+ *    the whole priority queue. My implementation requires the creation of a new priority queue object that will be
+ *    filled up as elements from the original queue are retrieved for printing, adding the data to a new element in
+ *    the new queue, and then removing root from the original queue to get the next priority item moved to the root.
+ *
+ *    7. Custom Priority Queue Implementation: Will be judged by professor, but I did my best to use appropriate data
+ *    structures and efficient algorithms.
  *
  */
 
@@ -152,7 +223,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
             }
 
             if (highPriorityChildIndex < arraySize
-                    && queueObject.get(highPriorityChildIndex).compareTo(queueObject.get(index)) > 0) {
+                    && queueObject.get(highPriorityChildIndex).compareTo(queueObject.get(index)) >= 0) {
                 swap(highPriorityChildIndex, index);
                 index = highPriorityChildIndex;
             } else {
