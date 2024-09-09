@@ -12,6 +12,7 @@ package mypriorityqueue;
 // This class will be used to work seamlessly with MyPriorityQueue class.
 // We also add implements Comparable so that we can override compareTo which is the key
 // addition that allows seamless integration with our priority queue implementation.
+// Data members are encapsulated and may be retrieved by implemented getters
 public class Student implements Comparable<Student> {
     /* Instance variables for Student class
     identifier: name    data-type: String
@@ -29,11 +30,9 @@ public class Student implements Comparable<Student> {
     // Constructor for Student class
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
     // TODO: May be a lot of improvements here
-    // TODO: Add getters, no setters needed
-    // TODO: Encapsulate data members
     // TODO: Add more data validation
     public Student(String name, int redID, String email, float gpa, int unitsTaken) {
-        // Assigns input parameters to respective variables for when Student object is instantiated.
+        // Assigns input parameters to respective variables for when Student object12 is instantiated.
         this.name = name;
         this.redID = redID;
         this.email = email;
@@ -57,12 +56,6 @@ public class Student implements Comparable<Student> {
         }
     }
 
-    // Method definition to calculatePriority from gpa and unitsTaken.
-    // Assignment requirements define priority as the sum of 30% of GPA and 70% of unitsTaken.
-    public float calculatePriority() {
-        return this.gpa * 0.3F + this.unitsTaken * 0.7F;
-    }
-
     // Add getter for gpa to allow StudentPriorityQueue to calculate priority
     public float getGpa() {
         return this.gpa;
@@ -73,6 +66,12 @@ public class Student implements Comparable<Student> {
         return unitsTaken;
     }
 
+    // Method definition to calculatePriority from gpa and unitsTaken.
+    // Assignment requirements define priority as the sum of 30% of GPA and 70% of unitsTaken.
+    public float calculatePriority() {
+        return this.gpa * 0.3F + this.unitsTaken * 0.7F;
+    }
+
     // Method to return value for priority when called.
     public float getPriority() {
         return calculatePriority();
@@ -80,7 +79,7 @@ public class Student implements Comparable<Student> {
 
     // Method to print a name and redID of Student object.
     // Used for printing out students in priority order or just a single entry.
-    // TODO: could use some better formatting
+    // TODO: could use some better formatting when printing to console
     void printStudent() {
         System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());
     }

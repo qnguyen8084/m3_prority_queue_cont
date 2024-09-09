@@ -39,4 +39,5 @@ class MainTest {
 
         studentList2.printQueuePriorities();
     }
+
 }
