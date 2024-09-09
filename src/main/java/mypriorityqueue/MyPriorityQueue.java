@@ -3,6 +3,7 @@
  * CS635
  * Lab01 - Priority Queue
  * 9/9/24
+ * MyPriorityQueue.java
  *
  *  This is my implementation of a priority Queue using Binary Heaps. It would not have been possible without all the
  *  resources available online. Some of the algorithm may look similar, but I have adapted it for the purposes of this
@@ -173,9 +174,10 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         queueObject = temp.queueObject;
     }
 
-
-    public void printOutput(T root) {
-        System.out.println(root);
+    // Declared this method to allow other classes to override the function and promote polymorphism.
+    // Function is used in printQueuePriorities method.
+    public void printOutput(T object) {
+        System.out.println(object);
     }
 
     // Method to obtain index of parent node which is used to raise or float student objects to their correct
