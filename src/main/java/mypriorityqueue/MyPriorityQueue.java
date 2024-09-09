@@ -3,6 +3,41 @@
  * CS635
  * Lab01 - Priority Queue
  * 9/9/24
+ *
+ *  This is my implementation of a priority Queue using Binary Heaps. It would not have been possible without all the
+ *  resources available online. Some of the algorithm may look similar, but I have adapted it for the purposes of this
+ *  Lab. We will go over some design chooses that I made in order of the Key Feature areas specified in the lab
+ *  assignment. There are also comments in the code to clarify what was done if the logic may take more effort to
+ *  comprehend.
+ *
+ *  1. Algorithm Efficiency : I choose to go with a binary heap implementation because it is more efficient than an
+ *  array or linked list implementation of a priority queue. Without going into detail of the implementations of
+ *  priority queues using an array or linked list has a time complexity of O(n) for certain operations. For a binary
+ *  heap the operation to add and remove the root which contains the high priority object is O(log_n) because as the
+ *  size of the heap grows the operation to add or remove elements is not linearly related to the size of the heap,
+ *  but dependent on how many levels an operation has to traverse down or up a tree. As the tree grows the nodes in
+ *  each level of the heap grows by a factor or 2 i.e. 1,2,4,8,16,32...
+ *
+ *  In this exercise the three main methods we will go over is are adding new elements, returning high priority element,
+ *  and removing element with the highest priority.
+ *
+ *  * Adding new elements: To insert an object this method will add the element to the end of the heap and then use the
+ *  raise method to find its respective place in the heap. The raise method compares the parent node and if the priority
+ *  of the parent node is less than the priority of the element to be added they will have there positions in the heap
+ *  swapped. This goes on until the priority of the parent node of the element added is either greater than or equal to
+ *  the element being added or the element being added has reached the root. This also conserves a priority for objects
+ *  with the same priority value in the order they were added to the head since the elements are not swapped when
+ *  the comparison between the added element and it's parent is equal.
+ *     public void insertObject(T element) {
+ *       queueObject.add(element);
+ *      if (queueObject.size() > 1) {
+ *           raise();
+ *       }
+ *      }
+ *
+ *
+ *  2.
+ *
  */
 
 package mypriorityqueue;
