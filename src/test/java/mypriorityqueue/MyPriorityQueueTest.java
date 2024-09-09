@@ -1,71 +1,69 @@
 package mypriorityqueue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MyPriorityQueueTest {
-    static MyPriorityQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();
-/*
-    @BeforeAll
-    void setUp() {
-        myPriorityQueue = new MyPriorityQueue<>();
-    }
+public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
+    public MyPriorityQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();
 
-    @AfterEach
-    void tearDown() {
-    }
-*/
+    @BeforeEach
+
     @Test
-    void insertObject() {
+     void insertObjectTest() {
         int input;
-        for (int i = 0; i < 100; i++) {
-            input = (int)(Math.random()*100)+1;
-            myPriorityQueue.insertObject(input);
+        for (int i = 0; i <= 10; i++) {
+            //input = (int)(Math.random()*100)+1;
+            myPriorityQueue.insertObject(i);
         }
         myPriorityQueue.printQueuePriorities();
+
     }
 
     @Test
     void removeRootTest() {
+        myPriorityQueue.insertObject(102);
+        myPriorityQueue.printQueuePriorities();
         myPriorityQueue.removeRoot();
         myPriorityQueue.printQueuePriorities();
     }
 
     @Test
-    void getRoot() {
-        System.out.println(myPriorityQueue.getRoot());
+    void getRootTest() {
+        int priority = myPriorityQueue.getRoot();
     }
-    @Test
 
-    void printQueuePriorities() {
+
+    @Test
+    void printQueuePrioritiesTest() {
         myPriorityQueue.printQueuePriorities();
     }
 
     @Test
-    void printOutput() {
+    void printOutputTest() {
         printQueuePriorities();
     }
 
     @Test
-    void getParentIndex() {
+    void getParentIndexTest() {
     }
 
     @Test
-    void getLeftChildIndex() {
+    void getLeftChildIndexTest() {
     }
 
     @Test
-    void getRightChildIndex() {
+    void getRightChildIndexTest() {
     }
 
     @Test
-    void swap() {
+    void swapTest() {
     }
 
     @Test
-    void raise() {
+    void raiseTest() {
     }
 
     @Test
-    void sink() {
+    void sinkTest() {
     }
 }

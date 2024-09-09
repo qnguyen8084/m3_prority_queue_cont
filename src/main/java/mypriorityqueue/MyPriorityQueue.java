@@ -12,7 +12,7 @@ import java.util.ArrayList;
 // Declaration of PriorityQueue class that is implemented using a binary max heap
 public class MyPriorityQueue<T extends Comparable<? super T>> {
     // Declare a ArrayList object, students
-    protected ArrayList<T> queueObject;
+    public ArrayList<T> queueObject;
 
     // Constructor for PriorityQueue class
     public MyPriorityQueue() {
@@ -33,7 +33,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
     // object, then it sets the last entry to the first entry, removes the last entry, performs sink method on new root
     // entry, and then returns the Student object that was originally removed from root.
     public T removeRoot() {
-        T root = getRoot();
+        T root = queueObject.getFirst();
         queueObject.set(0, queueObject.getLast());
         queueObject.removeLast();
         sink();
@@ -41,8 +41,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
     }
 
     public T getRoot() {
-        T first = queueObject.getFirst();
-        return first;
+        return queueObject.getFirst();
     }
 
     // Method to print all Student object entries contained in the heap
@@ -59,7 +58,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
     }
 
     public void printOutput(T root) {
-        System.out.print(root + ", ");
+        System.out.println(root);
     }
 
     // Method to obtain index of parent node which is used to raise or float student objects to their correct
