@@ -31,8 +31,6 @@ class StudentPriorityQueueTest {
         studentPriorityQ.insertObject(adam);
         studentPriorityQ.printQueuePriorities();
         studentPriorityQ.removeRoot();
-        assertEquals();
-        studentPriorityQ.size
     }
 
     @Test
