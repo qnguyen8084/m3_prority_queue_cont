@@ -31,7 +31,7 @@ public class Student implements Comparable<Student> {
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
     // TODO: May be a lot of improvements here
     // TODO: Add more data validation
-    public Student(String name, int redID, String email, float gpa, int unitsTaken) {
+    public Student(String name, int redID, String email, float gpa, int unitsTaken) throws ArithmeticException {
         // Assigns input parameters to respective variables for when Student object12 is instantiated.
         this.name = name;
         this.redID = redID;
@@ -39,19 +39,19 @@ public class Student implements Comparable<Student> {
         this.gpa = gpa;
         if (this.gpa < 0F || this.gpa > 4.0F) {
             try {
-                throw new Exception();
-            } catch (Exception e) {
+                throw new ArithmeticException();
+            } catch (ArithmeticException e) {
                 System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");
-                throw new RuntimeException(e);
+                throw new ArithmeticException();
             }
         }
         this.unitsTaken = unitsTaken;
         if (this.unitsTaken < 0 || this.unitsTaken > 150) {
             try {
-                throw new Exception();
-            } catch (Exception e) {
+                throw new ArithmeticException();
+            } catch (ArithmeticException e) {
                 System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");
-                throw new RuntimeException(e);
+                throw new ArithmeticException();
             }
         }
     }
@@ -63,7 +63,12 @@ public class Student implements Comparable<Student> {
 
     // Add getter for unitsTaken to allow StudentPriorityQueue to calculate priority
     public int getUnitsTaken() {
-        return unitsTaken;
+        return this.unitsTaken;
+    }
+
+    // Getter to get name used specifically for one of the tests.
+    public String getName() {
+        return this.name;
     }
 
     // Method definition to calculatePriority from gpa and unitsTaken.

@@ -20,7 +20,7 @@ public class StudentPriorityQueue extends MyPriorityQueue<Student> {
 
     // Implementation of priority calculation for student according to assignment specification
     // Another method is also defined in Student class file to reduce coupling.
-    public float calculatePriority(Student priorityStudent) {
+    public float queueCalculatePriority(Student priorityStudent) {
         return (priorityStudent.getGpa() * 0.3F + priorityStudent.getUnitsTaken() * 0.7F);
     }
 

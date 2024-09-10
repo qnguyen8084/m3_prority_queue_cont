@@ -1,0 +1,363 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MyPriorityQueue</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">mypriorityqueue</a>
+</div>
+
+<h1>Coverage Summary for Class: MyPriorityQueue (mypriorityqueue)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MyPriorityQueue</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (42/42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/*
+&nbsp; * Quy Nguyen
+&nbsp; * CS635
+&nbsp; * Lab01 - Priority Queue
+&nbsp; * 9/9/24
+&nbsp; * MyPriorityQueue.java
+&nbsp; *
+&nbsp; *  This is my implementation of a priority Queue using Binary Heaps. It would not have been possible without all the
+&nbsp; *  resources available online. Some of the algorithm may look similar, but I have adapted it for the purposes of this
+&nbsp; *  Lab. We will go over some design chooses that I made in order of the Key Feature areas specified in the lab
+&nbsp; *  assignment. There are also comments in the code to clarify what was done if the logic may take more effort to
+&nbsp; *  comprehend.
+&nbsp; *
+&nbsp; *  1. Algorithm Efficiency: I choose to go with a binary heap implementation because it is more efficient than an
+&nbsp; *  array or linked list implementation of a priority queue. Without going into detail of the implementations of
+&nbsp; *  priority queues using an array or linked list has a time complexity of O(n) for certain operations. For a binary
+&nbsp; *  heap the operation to add and remove the root which contains the high priority object is O(log_n) because as the
+&nbsp; *  size of the heap grows the operation to add or remove elements is not linearly related to the size of the heap,
+&nbsp; *  but dependent on how many levels an operation has to traverse down or up a tree. As the tree grows the nodes in
+&nbsp; *  each level of the heap grows by a factor or 2 i.e. 1,2,4,8,16,32...
+&nbsp; *
+&nbsp; *  In this exercise the three main methods we will go over is are adding new elements, returning high priority element,
+&nbsp; *  and removing element with the highest priority.
+&nbsp; *
+&nbsp; *  * Adding new elements: To insert an object this method will add the element to the end of the heap and then use the
+&nbsp; *  raise method to find its respective place in the heap. The raise method compares the parent node and if the priority
+&nbsp; *  of the parent node is less than the priority of the element to be added they will have there positions in the heap
+&nbsp; *  swapped. This goes on until the priority of the parent node of the element added is either greater than or equal to
+&nbsp; *  the element being added or the element being added has reached the root. This also conserves the priority for objects
+&nbsp; *  with the same priority value in the order they were added to the head since the elements are not swapped when
+&nbsp; *  the comparison between the priorities of the added element, and it&#39;s parent is equal. The time complexity of this
+&nbsp; *  method is at most O(log_n) since the element only needs to traverse from the bottom of the tree to the root through
+&nbsp; *  its parent node.
+&nbsp; *
+&nbsp; *     public void insertObject(T element) {
+&nbsp; *       queueObject.add(element);
+&nbsp; *      if (queueObject.size() &gt; 1) {
+&nbsp; *           raise();
+&nbsp; *       }
+&nbsp; *      }
+&nbsp; *
+&nbsp; *  * Returning element with the highest priority: To retrieve the element with the highest priority we would simply
+&nbsp; *  look at the root node since it will always contain the element with the highest priority. This operation gives has
+&nbsp; *  a time complexity of O(1).
+&nbsp; *
+&nbsp; *     public T getRoot() {
+&nbsp; *      return queueObject.getFirst();
+&nbsp; *  }
+&nbsp; *
+&nbsp; *  * Removing element with the highest priority: To remove the element with the highest priority we would first
+&nbsp; *  replace the element at the end of the heap with the root. Then we would run a sink operation on the root node to
+&nbsp; *  place that element in its correct position in the tree. This is done in the following order.
+&nbsp; *  while index is smaller than array size assign left child the as the higher priority child
+&nbsp; *  if the right child exists then compare the left and right child and assign the one with higher priority higherprioritychild
+&nbsp; *  then the higherprioritychild is higher than the element priority swap the two elements positions in the heap and
+&nbsp; *  continue until element is in the correct place or at the end of the heap. To conserve the priority of elements of
+&nbsp; *  the same priority added if the priority of the two elements is equal than swap the elements. This is because the
+&nbsp; *  element was originally located at the end of the heap suggesting it added after the parent node due to the logic of
+&nbsp; *  the raise method used when adding an element. The time complexity of this operation is at most O(log_n) since it
+&nbsp; *  it only has to traverse down the nodes of the tree when placing the last element that was set moved to root to
+&nbsp; *  its correct place in the heap.
+&nbsp; *
+&nbsp; *     public T removeRoot() {
+&nbsp; *       T root = queueObject.getFirst();
+&nbsp; *       queueObject.set(0, queueObject.getLast());
+&nbsp; *       queueObject.removeLast();
+&nbsp; *       sink();
+&nbsp; *       return root;
+&nbsp; *   }
+&nbsp; *
+&nbsp; *  * Time complexities
+&nbsp; *    Insert element - O(log_n)
+&nbsp; *    return root - O(1)
+&nbsp; *    remove root - O(log_n)
+&nbsp; *
+&nbsp; *   2. Object-Oriented Design:
+&nbsp; *   * Implement priority queue capable of holding student objects: My design follows a few design patterns. It mostly
+&nbsp; *   used behavioral pattern where I have an interface that interacts with a priorityQueue object. I&#39;m not too savvy on
+&nbsp; *   the particulars of individual behavioral design pattern names, but I feel like this fits the bill. The priority
+&nbsp; *   queue class abstracts the way it adds elements, removes elements, returns the root, and prints out the queue.
+&nbsp; *   My implementation of the priority queue also allows inheritance with the use of generics allowing it to be used
+&nbsp; *   with different data types or class objects. I have also defined another priority queue class named StudentPriorityQueue
+&nbsp; *   which specifies that the queue will be using the Student class as it&#39;s data type.
+&nbsp; *
+&nbsp; *   * Define a student with class attributes; name, redID, email, gpa (0-4.0), and units taken (0-150): I created a
+&nbsp; *   student class with the specified requirements. In the class I defined the constructor and added data validation
+&nbsp; *   for gpa and units taken. I may be able to add more for name, redID, and email if time allows. The class also
+&nbsp; *   includes methods the calculates and returns a student&#39;s priority value. It also has a method for what to print out
+&nbsp; *   to console if requested.
+&nbsp; *
+&nbsp; *   * Design the priority queue operations to work seamlessly with the student class: This is enabled by the
+&nbsp; *   implementation of the priority queue class to use generics instead of a single data type. Creating another
+&nbsp; *   priority class, StudentPriorityQueue, that extends MyPriorityQueue, but with the data type specified as Student
+&nbsp; *   objects. The key part of having the Student class work seamlessly with the priority queue class is the override
+&nbsp; *   implementation of the compareTwo function which is used in the raise and sink operations.
+&nbsp; *
+&nbsp; *   3. Testing Practices: TBC
+&nbsp; *
+&nbsp; *   4. Code Quality: Judged by professor
+&nbsp; *
+&nbsp; *   5. Priority Calculation for Students:
+&nbsp; *      (gpa * 0.3 + unitsTaken * 0.70)
+&nbsp; *      Implemented in both student class and priority queue
+&nbsp; *
+&nbsp; *    6. Printing in priority order: Printing in priority order was a challenge to figure out a way without cloning
+&nbsp; *    the whole priority queue. My implementation requires the creation of a new priority queue object that will be
+&nbsp; *    filled up as elements from the original queue are retrieved for printing, adding the data to a new element in
+&nbsp; *    the new queue, and then removing root from the original queue to get the next priority item moved to the root.
+&nbsp; *    The print methods also exhibits the use of polymorphism with the overriding of the print method.
+&nbsp; *
+&nbsp; *    7. Custom Priority Queue Implementation: Will be judged by professor, but I did my best to use appropriate data
+&nbsp; *    structures and efficient algorithms.
+&nbsp; *
+&nbsp; *
+&nbsp; *
+&nbsp; *
+&nbsp; */
+&nbsp;
+&nbsp;package mypriorityqueue;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;// Declaration of PriorityQueue class that is implemented using MaxBinaryHeap using ArrayList
+&nbsp;// I incorporate the use of generics here to allow StudentPriorityClass to promote inheritance as well as
+&nbsp;// reusability and extensibility.
+&nbsp;public class MyPriorityQueue&lt;T extends Comparable&lt;? super T&gt;&gt; {
+&nbsp;    // Declare a ArrayList object, students
+&nbsp;    // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
+&nbsp;    // array dynamically.
+&nbsp;    protected ArrayList&lt;T&gt; queueObject;
+&nbsp;
+&nbsp;    // Constructor for PriorityQueue class
+<b class="fc">&nbsp;    public MyPriorityQueue() {</b>
+<b class="fc">&nbsp;        queueObject = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to add Student object to the heap. It adds the student object to the end of the list and if the entries
+&nbsp;    // contained in the priorityQueue are greater than 1 it will call the raise method to move the entry to the correct
+&nbsp;    // position in the heap.
+&nbsp;    public void insertObject(T element) {
+<b class="fc">&nbsp;        queueObject.add(element);</b>
+<b class="fc">&nbsp;        if (queueObject.size() &gt; 1) {</b>
+<b class="fc">&nbsp;            raise();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // This method removes the root by swapping the root with last element at end of queue then applying sink method
+&nbsp;    // on root node.
+&nbsp;    public void removeRoot() {
+<b class="fc">&nbsp;        queueObject.set(0, queueObject.getLast());</b>
+<b class="fc">&nbsp;        queueObject.removeLast();</b>
+<b class="fc">&nbsp;        sink();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Returns the highest priority element located at root.
+&nbsp;    public T getRoot() {
+<b class="fc">&nbsp;        return queueObject.getFirst();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to print all Student object entries contained in the heap
+&nbsp;    // Makes a copy of heap node by node as each element is printed.
+&nbsp;    // Add root element to temp queue, print element, then remove root to get next priority element.
+&nbsp;    // Repeat until queue is empty then assign queueObject, temp.
+&nbsp;    public void printQueuePriorities() {
+<b class="fc">&nbsp;        MyPriorityQueue&lt;T&gt; temp = new MyPriorityQueue&lt;&gt;();</b>
+&nbsp;        T root;
+<b class="fc">&nbsp;        while (!queueObject.isEmpty()) {</b>
+<b class="fc">&nbsp;            root = queueObject.getFirst();</b>
+<b class="fc">&nbsp;            temp.insertObject(root);</b>
+<b class="fc">&nbsp;            printOutput(root);</b>
+<b class="fc">&nbsp;            removeRoot();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        System.out.println();</b>
+<b class="fc">&nbsp;        queueObject = temp.queueObject;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Declared this method to allow other classes to override the function and promote polymorphism.
+&nbsp;    // Function is used in printQueuePriorities method.
+&nbsp;    public void printOutput(T object) {
+<b class="fc">&nbsp;        System.out.println(object);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to obtain index of parent node which is used to raise or float student objects to their correct
+&nbsp;    // place in the heap
+&nbsp;    static int getParentIndex(int currentIndex) {
+<b class="fc">&nbsp;        return (currentIndex - 1) / 2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to obtain the index of the left child of a parent located at currentIndex
+&nbsp;    static int getLeftChildIndex(int currentIndex) {
+<b class="fc">&nbsp;        return (currentIndex * 2) + 1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to obtain the index of the right child of a parent located at currentIndex
+&nbsp;    static int getRightChildIndex(int currentIndex) {
+<b class="fc">&nbsp;        return (currentIndex * 2) + 2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to swap two entries in the array by assigning the first entry to a temporary Student object, overriding that object
+&nbsp;    // with the other entry of the second Student object, and finally assigning the original entry assigned to temp to the location that
+&nbsp;    // was previously assigned to the second object.
+&nbsp;    public void swap(int IndexA, int IndexB) {
+<b class="fc">&nbsp;        T temp = queueObject.get(IndexA);</b>
+<b class="fc">&nbsp;        queueObject.set(IndexA, queueObject.get(IndexB));</b>
+<b class="fc">&nbsp;        queueObject.set(IndexB, temp);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // This method is to raise a new element added to the end of the tree to reach its correct position in the
+&nbsp;    // priority queue.
+&nbsp;    public void raise() {
+<b class="fc">&nbsp;        int arrayIndex = queueObject.size() - 1;</b>
+<b class="fc">&nbsp;        while (arrayIndex &gt; 0</b>
+<b class="fc">&nbsp;                &amp;&amp; (queueObject.get(getParentIndex(arrayIndex)).compareTo(queueObject.get(arrayIndex))) &lt; 0) {</b>
+<b class="fc">&nbsp;            swap(getParentIndex(arrayIndex), arrayIndex);</b>
+<b class="fc">&nbsp;            arrayIndex = getParentIndex(arrayIndex);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to sink an entry to it&#39;s correct place in the heap. This method is used when removing the highest priority
+&nbsp;    // entry from root. By swapping the highest priority entry with the last entry in the heap, removing the last entry which
+&nbsp;    // was the highest priority entry, then using this sink method on the entry now located at the root of the heap it
+&nbsp;    // ensures that the heap retains the heap property where the child nodes will always have a lower priority than
+&nbsp;    // the parent nodes.
+&nbsp;    public void sink() {
+<b class="fc">&nbsp;        int arraySize = queueObject.size();</b>
+<b class="fc">&nbsp;        int index = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;        while (index &lt; arraySize) {</b>
+<b class="fc">&nbsp;            int leftChild = getLeftChildIndex(index);</b>
+<b class="fc">&nbsp;            int rightChildIndex = getRightChildIndex(index);</b>
+<b class="fc">&nbsp;            int highPriorityChildIndex = leftChild;</b>
+&nbsp;
+<b class="fc">&nbsp;            if (rightChildIndex &lt; arraySize</b>
+<b class="fc">&nbsp;                    &amp;&amp; queueObject.get(rightChildIndex).compareTo(queueObject.get(leftChild)) &gt; 0) {</b>
+<b class="fc">&nbsp;                highPriorityChildIndex = rightChildIndex;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            if (highPriorityChildIndex &lt; arraySize</b>
+<b class="fc">&nbsp;                    &amp;&amp; queueObject.get(highPriorityChildIndex).compareTo(queueObject.get(index)) &gt;= 0) {</b>
+<b class="fc">&nbsp;                swap(highPriorityChildIndex, index);</b>
+<b class="fc">&nbsp;                index = highPriorityChildIndex;</b>
+&nbsp;            } else {
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-09-09 21:35</div>
+</div>
+</body>
+</html>

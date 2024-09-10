@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > StudentPriorityQueue</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">mypriorityqueue</a>
+</div>
+
+<h1>Coverage Summary for Class: StudentPriorityQueue (mypriorityqueue)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StudentPriorityQueue</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/*
+&nbsp;* Quy Nguyen
+&nbsp;* CS635
+&nbsp;* Lab01 - Priority Queue
+&nbsp;* 9/9/24
+&nbsp;* StudentPriorityQueue.java
+&nbsp;*/
+&nbsp;
+&nbsp;package mypriorityqueue;
+&nbsp;
+&nbsp;// Definition of StudentPriorityQueue that extends/inherits the properties MyPriorityQueue class
+&nbsp;// We specify that we will be using Student objects instead of generic T
+<b class="fc">&nbsp;public class StudentPriorityQueue extends MyPriorityQueue&lt;Student&gt; {</b>
+&nbsp;
+&nbsp;    // Overrides printOutput function to call printStudent function from a student object
+&nbsp;    @Override
+&nbsp;    public void printOutput(Student student) {
+<b class="fc">&nbsp;        student.printStudent();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Implementation of priority calculation for student according to assignment specification
+&nbsp;    // Another method is also defined in Student class file to reduce coupling.
+&nbsp;    public float queueCalculatePriority(Student priorityStudent) {
+<b class="fc">&nbsp;        return (priorityStudent.getGpa() * 0.3F + priorityStudent.getUnitsTaken() * 0.7F);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-09-09 21:35</div>
+</div>
+</body>
+</html>
