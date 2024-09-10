@@ -127,11 +127,11 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
     // Declare a ArrayList object, students
     // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
     // array dynamically.
-    public ArrayList<T> queueObject;
+    ArrayList<T> queueObject;
 
     // Constructor for PriorityQueue class
     public MyPriorityQueue() {
-        queueObject = new ArrayList<>();
+        this.queueObject = new ArrayList<>();
     }
 
     // Method to add Student object to the heap. It adds the student object to the end of the list and if the entries

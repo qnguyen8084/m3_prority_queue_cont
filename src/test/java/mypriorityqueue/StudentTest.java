@@ -1,10 +1,19 @@
+/*
+ * Quy Nguyen
+ * CS635
+ * Lab01 - Priority Queue
+ * 9/9/24
+ * StudentTest.java
+ */
+
+/*
+This file is a file that contains unit tests for Student class. They are simple tests to test the functionality
+individual modules.
+ */
+
 package mypriorityqueue;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,19 +22,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
 
+    private final ByteArrayOutputStream test = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+
+    @BeforeEach
+    public void setUpBeforeClass() {
+        System.setOut(new PrintStream(test));
+    }
+
+    @AfterEach
+    public void tearDownAfterClass() {
+        System.setOut(originalOut);
+    }
+
     Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120);
     Student jesse = new Student("jesse", 1234, "jesse@sdsu.edu", 3.3F, 120);
     Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120);
-    Student bob = new Student("bob", 123, "bob@sdsu.edu", 3.3F, 121);
     Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120);
 
-
-    // Test to check priority calculation of Student object
-    @Test
-    void calculatePriorityTest() {
-        float priority = hanna.calculatePriority();
-        assertEquals((hanna.getGpa() * 0.3F + hanna.getUnitsTaken() * 0.7F), priority);
-    }
 
     // Test to get calculation of priority of Student class
     @Test
@@ -40,10 +54,7 @@ class StudentTest {
     @Test
     void printStudentTest() {
         hanna.printStudent();
-        jesse.printStudent();
-        bob.printStudent();
-        adam.printStudent();
-        chris.printStudent();
+        assertEquals("Name: hanna redID: 123 priority: 84.99", test.toString().strip());
     }
 
     // Test compareTo implementation
