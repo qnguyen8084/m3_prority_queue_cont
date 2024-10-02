@@ -118,12 +118,15 @@
 
 package mypriorityqueue;
 
+import java.util.AbstractQueue;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 // Declaration of PriorityQueue class that is implemented using MaxBinaryHeap using ArrayList
 // I incorporate the use of generics here to allow StudentPriorityClass to promote inheritance as well as
 // reusability and extensibility.
-public class MyPriorityQueue<T extends Comparable<? super T>> {
+
+public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQueue<T> {
     // Declare a ArrayList object, students
     // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
     // array dynamically.
@@ -134,28 +137,36 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         this.queueObject = new ArrayList<>();
     }
 
+
     // Method to add Student object to the heap. It adds the student object to the end of the list and if the entries
     // contained in the priorityQueue are greater than 1 it will call the raise method to move the entry to the correct
     // position in the heap.
-    public void insertObject(T element) {
+    @Override
+    public boolean offer(T element) {
         queueObject.add(element);
         if (queueObject.size() > 1) {
             raise();
         }
+        return true;
     }
+
 
     // This method removes the root by swapping the root with last element at end of queue then applying sink method
     // on root node.
-    public void removeRoot() {
+    @Override
+    public T poll() {
+        T t = peek();
         queueObject.set(0, queueObject.getLast());
         queueObject.removeLast();
         sink();
+        return t;
     }
 
-    // Returns the highest priority element located at root.
-    public T getRoot() {
+    @Override
+    public T peek() {
         return queueObject.getFirst();
     }
+
 
     // Method to print all Student object entries contained in the heap
     // Makes a copy of heap node by node as each element is printed.
@@ -166,9 +177,9 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
         T root;
         while (!queueObject.isEmpty()) {
             root = queueObject.getFirst();
-            temp.insertObject(root);
+            temp.offer(root);
             printOutput(root);
-            removeRoot();
+            poll();
         }
         System.out.println();
         queueObject = temp.queueObject;
@@ -244,4 +255,15 @@ public class MyPriorityQueue<T extends Comparable<? super T>> {
             }
         }
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
 }

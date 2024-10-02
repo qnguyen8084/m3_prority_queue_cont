@@ -8,6 +8,8 @@
 
 package mypriorityqueue;
 
+import java.util.PriorityQueue;
+
 // Definition of StudentPriorityQueue that extends/inherits the properties MyPriorityQueue class
 // We specify that we will be using Student objects instead of generic T
 public class StudentPriorityQueue extends MyPriorityQueue<Student> {

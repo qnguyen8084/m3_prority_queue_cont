@@ -52,22 +52,22 @@ class LabRequirementTests {
     // Adding Students with different priorities
     @Test
     void addingDifferentPrioritiesTest() {
-        myPriorityQ.insertObject(1);
-        assertEquals(1, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(10);
-        assertEquals(10, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(5);
-        assertEquals(10, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(7);
-        assertEquals(10, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(12);
-        assertEquals(12, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(20);
-        assertEquals(20, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(20);
-        assertEquals(20, myPriorityQ.getRoot());
-        myPriorityQ.insertObject(21);
-        assertEquals(21, myPriorityQ.getRoot());
+        myPriorityQ.offer(1);
+        assertEquals(1, myPriorityQ.peek());
+        myPriorityQ.offer(10);
+        assertEquals(10, myPriorityQ.peek());
+        myPriorityQ.offer(5);
+        assertEquals(10, myPriorityQ.peek());
+        myPriorityQ.offer(7);
+        assertEquals(10, myPriorityQ.peek());
+        myPriorityQ.offer(12);
+        assertEquals(12, myPriorityQ.peek());
+        myPriorityQ.offer(20);
+        assertEquals(20, myPriorityQ.peek());
+        myPriorityQ.offer(20);
+        assertEquals(20, myPriorityQ.peek());
+        myPriorityQ.offer(21);
+        assertEquals(21, myPriorityQ.peek());
     }
 
     // Adding and removing students with different priorities
@@ -75,7 +75,7 @@ class LabRequirementTests {
     void removingDifferentPrioritiesTest() {
         int nextPriority;
         for(int i = 0; i < 20; i++) {
-            myPriorityQ.insertObject((int) (Math.random() * (100)));
+            myPriorityQ.offer((int) (Math.random() * (100)));
         }
         for(int i = 0; i < 20; i++) {
             if(myPriorityQ.queueObject.size() > 1) {
@@ -89,23 +89,41 @@ class LabRequirementTests {
             } else {
                 break;
             }
-            myPriorityQ.removeRoot();
-            assertEquals(nextPriority, myPriorityQ.getRoot());
+            myPriorityQ.poll();
+            assertEquals(nextPriority, myPriorityQ.peek());
         }
     }
 
     // Adding removing Students with the same priority
     // There is an issue in keeping priority order with the order of Student objects added to Q
+    //
     @Test
     void addingAndRemovingStudentsWithSamePriorityTest() {
         Student s1 = new Student("s1", 1, "s1@sdsu.edu", 1.0F, 100);
         Student s2 = new Student("s2", 2, "s2@sdsu.edu", 1.0F, 100);
-        studentPriorityQ.insertObject(s1);
-        studentPriorityQ.insertObject(s2);
-        assertEquals("s1", studentPriorityQ.getRoot().getName());
-        studentPriorityQ.removeRoot();
-        assertEquals("s2", studentPriorityQ.getRoot().getName());
-        studentPriorityQ.removeRoot();
+        Student s3 = new Student("s3", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s4 = new Student("s4", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s5 = new Student("s5", 2, "s2@sdsu.edu", 1.0F, 100);
+        studentPriorityQ.offer(s1);
+        studentPriorityQ.offer(s2);
+        studentPriorityQ.offer(s3);
+        studentPriorityQ.offer(s4);
+        studentPriorityQ.offer(s5);
+        assert studentPriorityQ.peek() != null;
+        assertEquals("s1", studentPriorityQ.peek().getName());
+        studentPriorityQ.poll();
+        assert studentPriorityQ.peek() != null;
+        assertEquals("s2", studentPriorityQ.peek().getName());
+        studentPriorityQ.poll();
+        assert studentPriorityQ.peek() != null;
+        assertEquals("s3", studentPriorityQ.peek().getName());
+        studentPriorityQ.poll();
+        assert studentPriorityQ.peek() != null;
+        assertEquals("s4", studentPriorityQ.peek().getName());
+        studentPriorityQ.poll();
+        assert studentPriorityQ.peek() != null;
+        assertEquals("s5", studentPriorityQ.peek().getName());
+        studentPriorityQ.poll();
     }
 
     // Pass if exception is detected for GPA is above 4.0 or under 0

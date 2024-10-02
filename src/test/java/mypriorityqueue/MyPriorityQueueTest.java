@@ -46,7 +46,7 @@ public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
         int count = 0;
         for (int i = 0; i < 100; i++) {
             //input = (int)(Math.random()*100)+1;
-            myPriorityQueue.insertObject(i);
+            myPriorityQueue.offer(i);
             count++;
         }
         assertEquals(count, myPriorityQueue.queueObject.size());
@@ -54,39 +54,39 @@ public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
 
     @Test
     void removeRootTest() {
-        myPriorityQueue.insertObject(102);
+        myPriorityQueue.offer(102);
         assertEquals(102, myPriorityQueue.queueObject.getFirst());
-        myPriorityQueue.removeRoot();
+        myPriorityQueue.poll();
         assertEquals(0, myPriorityQueue.queueObject.size());
     }
 
     @Test
-    void getRootTest() {
-        myPriorityQueue.insertObject(102);
-        assertEquals(102, myPriorityQueue.getRoot());
+    void peekTest() {
+        myPriorityQueue.offer(102);
+        assertEquals(102, myPriorityQueue.peek());
     }
 
 
     @Test
     void printQueuePrioritiesTest() {
-        myPriorityQueue.insertObject(102);
-        myPriorityQueue.insertObject(10);
-        myPriorityQueue.insertObject(1);
-        myPriorityQueue.insertObject(40);
-        myPriorityQueue.insertObject(13);
-        myPriorityQueue.insertObject(40);
+        myPriorityQueue.offer(102);
+        myPriorityQueue.offer(10);
+        myPriorityQueue.offer(1);
+        myPriorityQueue.offer(40);
+        myPriorityQueue.offer(13);
+        myPriorityQueue.offer(40);
         myPriorityQueue.printQueuePriorities();
         assertEquals("102404013101", test.toString().replaceAll("[\\n\\r]", ""));
     }
 
     @Test
     void printOutputTest() {
-        myPriorityQueue.insertObject(102);
-        myPriorityQueue.insertObject(10);
-        myPriorityQueue.insertObject(1);
-        myPriorityQueue.insertObject(40);
-        myPriorityQueue.insertObject(13);
-        myPriorityQueue.insertObject(40);
+        myPriorityQueue.offer(102);
+        myPriorityQueue.offer(10);
+        myPriorityQueue.offer(1);
+        myPriorityQueue.offer(40);
+        myPriorityQueue.offer(13);
+        myPriorityQueue.offer(40);
         myPriorityQueue.printQueuePriorities();
         assertEquals("102404013101", test.toString().replaceAll("[\\n\\r]", ""));
     }
