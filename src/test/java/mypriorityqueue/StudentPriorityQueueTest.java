@@ -48,32 +48,32 @@ class StudentPriorityQueueTest {
 
     @Test
     void insertObjectTest() {
-        studentPriorityQ.insertObject(hanna);
+        studentPriorityQ.offer(hanna);
         assertEquals(studentPriorityQ.queueObject.getFirst(), hanna);
     }
 
     @Test
     void removeRootTest() {
-        studentPriorityQ.insertObject(hanna);
-        studentPriorityQ.insertObject(jesse);
-        studentPriorityQ.insertObject(adam);
+        studentPriorityQ.offer(hanna);
+        studentPriorityQ.offer(jesse);
+        studentPriorityQ.offer(adam);
         studentPriorityQ.printQueuePriorities();
-        studentPriorityQ.removeRoot();
+        studentPriorityQ.poll();
     }
 
     @Test
     void getRootTest() {
-        studentPriorityQ.insertObject(hanna);
-        assertEquals(studentPriorityQ.getRoot(), hanna);
+        studentPriorityQ.offer(hanna);
+        assertEquals(studentPriorityQ.peek(), hanna);
     }
 
     @Test
     void printQueuePrioritiesTest() {
-        studentPriorityQ.insertObject(hanna);
-        studentPriorityQ.insertObject(adam);
-        studentPriorityQ.insertObject(bob);
-        studentPriorityQ.insertObject(chris);
-        studentPriorityQ.insertObject(jesse);
+        studentPriorityQ.offer(hanna);
+        studentPriorityQ.offer(adam);
+        studentPriorityQ.offer(bob);
+        studentPriorityQ.offer(chris);
+        studentPriorityQ.offer(jesse);
         studentPriorityQ.printQueuePriorities();
         assertEquals("Name:bobredID:123priority:85.689995Name:adamredID:124priority:85.02Name:hannaredID:123priority:84.99Name:jesseredID:1234priority:84.99Name:chrisredID:123priority:84.96", test.toString().strip().replaceAll("[\\n\\r ]", ""));
     }
