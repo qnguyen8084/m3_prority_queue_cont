@@ -118,6 +118,7 @@
 
 package mypriorityqueue;
 
+import java.io.Serializable;
 import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -126,7 +127,7 @@ import java.util.Iterator;
 // I incorporate the use of generics here to allow StudentPriorityClass to promote inheritance as well as
 // reusability and extensibility.
 
-public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQueue<T> {
+public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQueue<T> implements Serializable {
     // Declare a ArrayList object, students
     // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
     // array dynamically.

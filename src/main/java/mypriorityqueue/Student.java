@@ -8,12 +8,14 @@
 
 package mypriorityqueue;
 
+import java.util.Comparator;
+
 // Declaration of Student class
 // This class will be used to work seamlessly with MyPriorityQueue class.
 // We also add implements Comparable so that we can override compareTo which is the key
 // addition that allows seamless integration with our priority queue implementation.
 // Data members are encapsulated and may be retrieved by implemented getters
-public class Student implements Comparable<Student> {
+public class Student implements Comparator<Float>, Comparable<Student> {
     /* Instance variables for Student class
     identifier: name    data-type: String
     identifier: redID   data-type: int
@@ -94,6 +96,11 @@ public class Student implements Comparable<Student> {
     @Override
     public int compareTo(Student s) {
         float priority = this.gpa * 0.3F + this.unitsTaken * 0.7F;
-        return Float.compare(priority, s.getPriority());
+        return compare(priority, s.getPriority());
+    }
+
+    @Override
+    public int compare(Float o1, Float o2) {
+        return Float.compare(o1, o2);
     }
 }
