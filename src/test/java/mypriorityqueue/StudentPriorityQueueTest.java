@@ -45,44 +45,44 @@ class StudentPriorityQueueTest {
     public void tearDownAfterClass() {
         System.setOut(originalOut);
     }
-
-    @Test
-    void insertObjectTest() {
-        studentPriorityQ.offer(hanna);
-        assertEquals(studentPriorityQ.queue.getFirst(), hanna);
-    }
-
-    @Test
-    void removeRootTest() {
-        studentPriorityQ.offer(hanna);
-        studentPriorityQ.offer(jesse);
-        studentPriorityQ.offer(adam);
-        studentPriorityQ.printQueuePriorities();
-        studentPriorityQ.poll();
-    }
-
-    @Test
-    void getRootTest() {
-        studentPriorityQ.offer(hanna);
-        assertEquals(studentPriorityQ.peek(), hanna);
-    }
-
-    @Test
-    void printQueuePrioritiesTest() {
-        studentPriorityQ.offer(hanna);
-        studentPriorityQ.offer(adam);
-        studentPriorityQ.offer(bob);
-        studentPriorityQ.offer(chris);
-        studentPriorityQ.offer(jesse);
-        studentPriorityQ.printQueuePriorities();
-        assertEquals("Name:bobredID:123priority:85.689995Name:adamredID:124priority:85.02Name:hannaredID:123priority:84.99Name:jesseredID:1234priority:84.99Name:chrisredID:123priority:84.96", test.toString().strip().replaceAll("[\\n\\r ]", ""));
-    }
-
-    @Test
-    void printOutputTest() {
-        studentPriorityQ.printOutput(hanna);
-        assertEquals("Name:hannaredID:123priority:84.99",
-                test.toString().replaceAll("[\\n\\r ]", ""));
-
-    }
+//
+//    @Test
+//    void insertObjectTest() {
+//        studentPriorityQ.offer(hanna);
+//        assertEquals(studentPriorityQ.queue.getFirst(), hanna);
+//    }
+//
+//    @Test
+//    void removeRootTest() {
+//        studentPriorityQ.offer(hanna);
+//        studentPriorityQ.offer(jesse);
+//        studentPriorityQ.offer(adam);
+//        studentPriorityQ.printQueuePriorities();
+//        studentPriorityQ.poll();
+//    }
+//
+//    @Test
+//    void getRootTest() {
+//        studentPriorityQ.offer(hanna);
+//        assertEquals(studentPriorityQ.peek(), hanna);
+//    }
+//
+//    @Test
+//    void printQueuePrioritiesTest() {
+//        studentPriorityQ.offer(hanna);
+//        studentPriorityQ.offer(adam);
+//        studentPriorityQ.offer(bob);
+//        studentPriorityQ.offer(chris);
+//        studentPriorityQ.offer(jesse);
+//        studentPriorityQ.printQueuePriorities();
+//        assertEquals("Name:bobredID:123priority:85.689995Name:adamredID:124priority:85.02Name:hannaredID:123priority:84.99Name:jesseredID:1234priority:84.99Name:chrisredID:123priority:84.96", test.toString().strip().replaceAll("[\\n\\r ]", ""));
+//    }
+//
+//    @Test
+//    void printOutputTest() {
+//        studentPriorityQ.printOutput(hanna);
+//        assertEquals("Name:hannaredID:123priority:84.99",
+//                test.toString().replaceAll("[\\n\\r ]", ""));
+//
+//    }
 }

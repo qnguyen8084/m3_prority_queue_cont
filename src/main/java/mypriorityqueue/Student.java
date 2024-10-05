@@ -10,6 +10,7 @@ package mypriorityqueue;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
 import java.util.Comparator;
 
 // Declaration of Student class
@@ -30,7 +31,7 @@ public class Student implements Comparable<Student> {
     private final String email;
     private final float gpa;
     private final int unitsTaken;
-    private int modCount;
+    private Instant insertionTime;
 
     // Constructor for Student class
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
@@ -61,8 +62,12 @@ public class Student implements Comparable<Student> {
         }
     }
 
-    public void setModCount(int modCount) {
-        this.modCount = modCount;
+    public void setInsertionTime(Instant insertionTime) {
+        this.insertionTime = insertionTime;
+    }
+
+    public Instant getInsertionTime() {
+        return this.insertionTime;
     }
 
     // Add getter for gpa to allow StudentPriorityQueue to calculate priority
@@ -93,8 +98,10 @@ public class Student implements Comparable<Student> {
 
     @Override
         public String toString() {
-        return "Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority();
+        return "Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority() +
+                " Insertion Time: " + this.insertionTime;
     }
+
     // Method to print a name and redID of Student object.
     // Used for printing out students in priority order or just a single entry.
     void printStudent() {
@@ -104,8 +111,20 @@ public class Student implements Comparable<Student> {
     /* This is needed for natural ordering of Student objects as well as our implementation of PriorityQueue,
     * MyPriorityQueue.
     */
+//    @Override
+//    public int compareTo(@NotNull Student s) {
+//        return Float.compare(this.getPriority(), s.getPriority());
+//    }
+
     @Override
     public int compareTo(@NotNull Student s) {
-        return Float.compare(this.getPriority(), s.getPriority());
+        if (this.getPriority() == s.getPriority()) {
+            if (this.getInsertionTime().equals(s.getInsertionTime())) {
+                return 0;
+            } else {
+                return this.getInsertionTime().isBefore(s.getInsertionTime()) ? 1 : -1;
+            }
+        }
+        return 0;
     }
 }

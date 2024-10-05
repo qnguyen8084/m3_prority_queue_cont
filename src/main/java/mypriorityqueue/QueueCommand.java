@@ -1,18 +1,17 @@
 package mypriorityqueue;
 
-import java.sql.Statement;
+import java.time.Instant;
 import java.util.Stack;
 
 // Command interface
 public interface QueueCommand {
-    void execute();
+    Student execute();
     void undo();
 }
 
-
 // Concrete Classes
 class AddElementCommand implements QueueCommand {
-    private StudentPriorityQueue queue;
+    private final StudentPriorityQueue queue;
     private Student student;
 
     AddElementCommand(StudentPriorityQueue queue, Student student) {
@@ -21,8 +20,10 @@ class AddElementCommand implements QueueCommand {
     }
 
     @Override
-    public void execute() {
+    public Student execute() {
+        student.setInsertionTime(Instant.now());
         queue.offer(student);
+        return student;
     }
 
     @Override
@@ -32,7 +33,7 @@ class AddElementCommand implements QueueCommand {
 }
 
 class RemoveElementCommand implements QueueCommand {
-    private StudentPriorityQueue queue;
+    private final StudentPriorityQueue queue;
     private Student student;
 
     RemoveElementCommand(StudentPriorityQueue queue) {
@@ -40,8 +41,8 @@ class RemoveElementCommand implements QueueCommand {
     }
 
     @Override
-    public void execute() {
-        this.student = queue.poll();
+    public Student execute() {
+        return queue.poll();
     }
 
     @Override
@@ -51,16 +52,15 @@ class RemoveElementCommand implements QueueCommand {
 }
 
 class PeekElementCommand implements QueueCommand {
-    private StudentPriorityQueue queue;
-    private Student student;
+    private final StudentPriorityQueue queue;
 
     PeekElementCommand(StudentPriorityQueue queue) {
         this.queue = queue;
     }
 
     @Override
-    public void execute() {
-        this.student = queue.peek();
+    public Student execute() {
+        return queue.peek();
     }
 
     @Override
@@ -71,11 +71,11 @@ class PeekElementCommand implements QueueCommand {
 
 //Invoker
 class QueueCommandInvoker {
-    private Stack<QueueCommand> commandHistory = new Stack<>();
+    private final Stack<QueueCommand> commandHistory = new Stack<>();
 
-    void executeOperation(QueueCommand command) {
-        command.execute();
+    Student execute(QueueCommand command) {
         commandHistory.push(command);
+        return command.execute();
     }
 
     void undoOperation() {
