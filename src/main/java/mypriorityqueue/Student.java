@@ -8,6 +8,11 @@
 
 package mypriorityqueue;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.time.Instant;
+import java.util.Comparator;
+
 // Declaration of Student class
 // This class will be used to work seamlessly with MyPriorityQueue class.
 // We also add implements Comparable so that we can override compareTo which is the key
@@ -26,6 +31,7 @@ public class Student implements Comparable<Student> {
     private final String email;
     private final float gpa;
     private final int unitsTaken;
+    private Instant insertionTime;
 
     // Constructor for Student class
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
@@ -56,6 +62,14 @@ public class Student implements Comparable<Student> {
         }
     }
 
+    public void setInsertionTime(Instant insertionTime) {
+        this.insertionTime = insertionTime;
+    }
+
+    public Instant getInsertionTime() {
+        return this.insertionTime;
+    }
+
     // Add getter for gpa to allow StudentPriorityQueue to calculate priority
     public float getGpa() {
         return this.gpa;
@@ -82,18 +96,35 @@ public class Student implements Comparable<Student> {
         return calculatePriority();
     }
 
-    // Method to print a name and redID of Student object.
-    // Used for printing out students in priority order or just a single entry.
-    // TODO: could use some better formatting when printing to console
-    void printStudent() {
-        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());
+    @Override
+        public String toString() {
+        return "Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority() +
+                " Insertion Time: " + this.insertionTime;
     }
 
-    // This is the key component to have our implementation of Student class to work with our implementation of
-    // priority queue. Exhibits polymorphism.
+    // Method to print a name and redID of Student object.
+    // Used for printing out students in priority order or just a single entry.
+    void printStudent() {
+        System.out.println(this);
+    }
+
+    /* This is needed for natural ordering of Student objects as well as our implementation of PriorityQueue,
+    * MyPriorityQueue.
+    */
+//    @Override
+//    public int compareTo(@NotNull Student s) {
+//        return Float.compare(this.getPriority(), s.getPriority());
+//    }
+
     @Override
-    public int compareTo(Student s) {
-        float priority = this.gpa * 0.3F + this.unitsTaken * 0.7F;
-        return Float.compare(priority, s.getPriority());
+    public int compareTo(@NotNull Student s) {
+        if (this.getPriority() == s.getPriority()) {
+            if (this.getInsertionTime().equals(s.getInsertionTime())) {
+                return 0;
+            } else {
+                return this.getInsertionTime().isBefore(s.getInsertionTime()) ? 1 : -1;
+            }
+        }
+        return 0;
     }
 }

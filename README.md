@@ -32,7 +32,7 @@ https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html
 -[ ] Stub any required methods to meet the constraints of the parent class. *Implement only essential methods; not all methods need to be implemented. Add "toArray" and "toString" methods in addition to those from Assignment 1.*
 
 ### Strategy Pattern Implementation:
--[ ] Employ the strategy pattern to enable dynamic determination of the ordering mechanism for the priority queue during object creation.
+-[x] Employ the strategy pattern to enable dynamic determination of the ordering mechanism for the priority queue during object creation.
 
 ### Iterator Implementation:
 -[ ] Develop an iterator for your strategy pattern class.
