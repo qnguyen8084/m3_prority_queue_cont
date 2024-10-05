@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to MyPriorityQueue implementation");
+        QueueCommandInvoker commandInvoker = new QueueCommandInvoker();
 
         PriorityOrderStrategy priorityOrder = new PriorityOrderStrategy(new MinStrategy());
         StudentPriorityQueue studentPriorityQ = new StudentPriorityQueue(priorityOrder.applyPriority());
@@ -19,22 +20,23 @@ public class Main {
 
         Student[] studentList = {hanna, jesse, adam, bob, chris};
 
-        populateQ(studentPriorityQ, studentList);
+        for (Student student: studentList) {
+            QueueCommand addElementCommand = new AddElementCommand(studentPriorityQ, student);
+            commandInvoker.executeOperation(addElementCommand);
+        }
+        for (Student student: studentList) {
+            Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
+        }
 
-        populateQ(studentPriorityQ2, studentList);
-
-    }
-
-    private static void populateQ(StudentPriorityQueue studentPriorityQ, Student[] studentList) {
 
         for (Student student: studentList) {
-            studentPriorityQ.offer(student);
+            QueueCommand addElementCommand = new AddElementCommand(studentPriorityQ2, student);
+            commandInvoker.executeOperation(addElementCommand);
         }
-        Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
-        Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
-        Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
-        Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
-        Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
+        for (Student student: studentList) {
+            Objects.requireNonNull(studentPriorityQ2.poll()).printStudent();
+        }
     }
+
 }
 

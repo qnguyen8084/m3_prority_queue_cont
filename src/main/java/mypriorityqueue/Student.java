@@ -30,6 +30,7 @@ public class Student implements Comparable<Student> {
     private final String email;
     private final float gpa;
     private final int unitsTaken;
+    private int modCount;
 
     // Constructor for Student class
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
@@ -60,6 +61,10 @@ public class Student implements Comparable<Student> {
         }
     }
 
+    public void setModCount(int modCount) {
+        this.modCount = modCount;
+    }
+
     // Add getter for gpa to allow StudentPriorityQueue to calculate priority
     public float getGpa() {
         return this.gpa;
@@ -86,11 +91,14 @@ public class Student implements Comparable<Student> {
         return calculatePriority();
     }
 
+    @Override
+        public String toString() {
+        return "Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority();
+    }
     // Method to print a name and redID of Student object.
     // Used for printing out students in priority order or just a single entry.
-    // TODO: could use some better formatting when printing to console
     void printStudent() {
-        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());
+        System.out.println(this);
     }
 
     /* This is needed for natural ordering of Student objects as well as our implementation of PriorityQueue,
