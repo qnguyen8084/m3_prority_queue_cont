@@ -62,6 +62,32 @@ public class Student implements Comparable<Student> {
         }
     }
 
+    public Student(String name, int redID, String email, float gpa, int unitsTaken, Instant insertionTime) throws ArithmeticException {
+        // Assigns input parameters to respective variables for when Student object12 is instantiated.
+        this.name = name;
+        this.redID = redID;
+        this.email = email;
+        this.gpa = gpa;
+        this.insertionTime = insertionTime;
+        if (this.gpa < 0F || this.gpa > 4.0F) {
+            try {
+                throw new ArithmeticException();
+            } catch (ArithmeticException e) {
+                System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");
+                throw new ArithmeticException();
+            }
+        }
+        this.unitsTaken = unitsTaken;
+        if (this.unitsTaken < 0 || this.unitsTaken > 150) {
+            try {
+                throw new ArithmeticException();
+            } catch (ArithmeticException e) {
+                System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");
+                throw new ArithmeticException();
+            }
+        }
+    }
+
     public void setInsertionTime(Instant insertionTime) {
         this.insertionTime = insertionTime;
     }
@@ -118,13 +144,14 @@ public class Student implements Comparable<Student> {
 
     @Override
     public int compareTo(@NotNull Student s) {
-        if (this.getPriority() == s.getPriority()) {
+        if (this.getPriority() != s.getPriority()) {
+            return Float.compare(this.getPriority(), s.getPriority());
+        } else {
             if (this.getInsertionTime().equals(s.getInsertionTime())) {
                 return 0;
             } else {
                 return this.getInsertionTime().isBefore(s.getInsertionTime()) ? 1 : -1;
             }
         }
-        return 0;
     }
 }
