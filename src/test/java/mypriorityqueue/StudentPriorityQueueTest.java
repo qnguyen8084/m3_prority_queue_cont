@@ -49,7 +49,7 @@ class StudentPriorityQueueTest {
     @Test
     void insertObjectTest() {
         studentPriorityQ.offer(hanna);
-        assertEquals(studentPriorityQ.queueObject.getFirst(), hanna);
+        assertEquals(studentPriorityQ.queue.getFirst(), hanna);
     }
 
     @Test

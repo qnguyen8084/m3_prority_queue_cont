@@ -2,7 +2,8 @@ package mypriorityqueue;
 
 import java.util.Comparator;
 
-public interface PriorityStrategy {
-
+public interface PriorityStrategy<T>{
+    Comparator<T> getComparator();
 }
+
 

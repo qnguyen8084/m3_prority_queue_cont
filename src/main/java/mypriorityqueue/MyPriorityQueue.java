@@ -119,33 +119,29 @@
 package mypriorityqueue;
 
 import java.io.Serializable;
-import java.util.AbstractQueue;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 // Declaration of PriorityQueue class that is implemented using MaxBinaryHeap using ArrayList
 // I incorporate the use of generics here to allow StudentPriorityClass to promote inheritance as well as
 // reusability and extensibility.
 
-public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQueue<T> implements Serializable {
+public class MyPriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> implements Serializable, Comparator<T> {
     // Declare a ArrayList object, students
     // My decision to use an ArrayList for a priority queue in Java because it handles resizing the size of the
     // array dynamically.
-    ArrayList<T> queueObject;
-
+    ArrayList<T> queue;
     // Constructor for PriorityQueue class
     public MyPriorityQueue() {
-        this.queueObject = new ArrayList<>();
+        this.queue = new ArrayList<>();
     }
-
 
     // Method to add Student object to the heap. It adds the student object to the end of the list and if the entries
     // contained in the priorityQueue are greater than 1 it will call the raise method to move the entry to the correct
     // position in the heap.
     @Override
     public boolean offer(T element) {
-        queueObject.add(element);
-        if (queueObject.size() > 1) {
+        queue.add(element);
+        if (queue.size() > 1) {
             raise();
         }
         return true;
@@ -157,15 +153,15 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
     @Override
     public T poll() {
         T t = peek();
-        queueObject.set(0, queueObject.getLast());
-        queueObject.removeLast();
+        queue.set(0, queue.getLast());
+        queue.removeLast();
         sink();
         return t;
     }
 
     @Override
     public T peek() {
-        return queueObject.getFirst();
+        return queue.getFirst();
     }
 
 
@@ -176,14 +172,14 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
     public void printQueuePriorities() {
         MyPriorityQueue<T> temp = new MyPriorityQueue<>();
         T root;
-        while (!queueObject.isEmpty()) {
-            root = queueObject.getFirst();
+        while (!queue.isEmpty()) {
+            root = queue.getFirst();
             temp.offer(root);
             printOutput(root);
             poll();
         }
         System.out.println();
-        queueObject = temp.queueObject;
+        queue = temp.queue;
     }
 
     // Declared this method to allow other classes to override the function and promote polymorphism.
@@ -212,17 +208,17 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
     // with the other entry of the second Student object, and finally assigning the original entry assigned to temp to the location that
     // was previously assigned to the second object.
     public void swap(int IndexA, int IndexB) {
-        T temp = queueObject.get(IndexA);
-        queueObject.set(IndexA, queueObject.get(IndexB));
-        queueObject.set(IndexB, temp);
+        T temp = queue.get(IndexA);
+        queue.set(IndexA, queue.get(IndexB));
+        queue.set(IndexB, temp);
     }
 
     // This method is to raise a new element added to the end of the tree to reach its correct position in the
     // priority queue.
     public void raise() {
-        int arrayIndex = queueObject.size() - 1;
+        int arrayIndex = queue.size() - 1;
         while (arrayIndex > 0
-                && (queueObject.get(getParentIndex(arrayIndex)).compareTo(queueObject.get(arrayIndex))) < 0) {
+                && compare(queue.get(getParentIndex(arrayIndex)), queue.get(arrayIndex)) < 0) {
             swap(getParentIndex(arrayIndex), arrayIndex);
             arrayIndex = getParentIndex(arrayIndex);
         }
@@ -234,7 +230,7 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
     // ensures that the heap retains the heap property where the child nodes will always have a lower priority than
     // the parent nodes.
     public void sink() {
-        int arraySize = queueObject.size();
+        int arraySize = queue.size();
         int index = 0;
 
         while (index < arraySize) {
@@ -243,12 +239,12 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
             int highPriorityChildIndex = leftChild;
 
             if (rightChildIndex < arraySize
-                    && queueObject.get(rightChildIndex).compareTo(queueObject.get(leftChild)) > 0) {
+                    && compare(queue.get(rightChildIndex), (queue.get(leftChild))) > 0) {
                 highPriorityChildIndex = rightChildIndex;
             }
 
             if (highPriorityChildIndex < arraySize
-                    && queueObject.get(highPriorityChildIndex).compareTo(queueObject.get(index)) >= 0) {
+                    && compare(queue.get(highPriorityChildIndex), (queue.get(index))) >= 0) {
                 swap(highPriorityChildIndex, index);
                 index = highPriorityChildIndex;
             } else {
@@ -265,6 +261,11 @@ public class MyPriorityQueue<T extends Comparable<? super T>> extends AbstractQu
     @Override
     public int size() {
         return 0;
+    }
+
+    @Override
+    public int compare(T o1, T o2) {
+        return o1.compareTo(o2);
     }
 
 }

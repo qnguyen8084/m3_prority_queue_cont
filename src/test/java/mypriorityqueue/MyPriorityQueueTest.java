@@ -49,15 +49,15 @@ public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
             myPriorityQueue.offer(i);
             count++;
         }
-        assertEquals(count, myPriorityQueue.queueObject.size());
+        assertEquals(count, myPriorityQueue.queue.size());
     }
 
     @Test
     void removeRootTest() {
         myPriorityQueue.offer(102);
-        assertEquals(102, myPriorityQueue.queueObject.getFirst());
+        assertEquals(102, myPriorityQueue.queue.getFirst());
         myPriorityQueue.poll();
-        assertEquals(0, myPriorityQueue.queueObject.size());
+        assertEquals(0, myPriorityQueue.queue.size());
     }
 
     @Test
@@ -123,12 +123,12 @@ public class MyPriorityQueueTest extends MyPriorityQueue<Integer> {
 
     @Test
     void swapTest() {
-        myPriorityQueue.queueObject.add(102);
-        myPriorityQueue.queueObject.add(10);
-        Integer a = myPriorityQueue.queueObject.getFirst();
-        Integer b = myPriorityQueue.queueObject.getLast();
+        myPriorityQueue.queue.add(102);
+        myPriorityQueue.queue.add(10);
+        Integer a = myPriorityQueue.queue.getFirst();
+        Integer b = myPriorityQueue.queue.getLast();
         myPriorityQueue.swap(0,1);
-        assertEquals(a, myPriorityQueue.queueObject.getLast());
-        assertEquals(b, myPriorityQueue.queueObject.getFirst());
+        assertEquals(a, myPriorityQueue.queue.getLast());
+        assertEquals(b, myPriorityQueue.queue.getFirst());
     }
 }

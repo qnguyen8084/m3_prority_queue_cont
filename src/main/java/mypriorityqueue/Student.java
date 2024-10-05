@@ -8,6 +8,8 @@
 
 package mypriorityqueue;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Comparator;
 
 // Declaration of Student class
@@ -15,7 +17,7 @@ import java.util.Comparator;
 // We also add implements Comparable so that we can override compareTo which is the key
 // addition that allows seamless integration with our priority queue implementation.
 // Data members are encapsulated and may be retrieved by implemented getters
-public class Student implements Comparator<Float>, Comparable<Student> {
+public class Student implements Comparable<Student> {
     /* Instance variables for Student class
     identifier: name    data-type: String
     identifier: redID   data-type: int
@@ -91,16 +93,11 @@ public class Student implements Comparator<Float>, Comparable<Student> {
         System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());
     }
 
-    // This is the key component to have our implementation of Student class to work with our implementation of
-    // priority queue. Exhibits polymorphism.
+    /* This is needed for natural ordering of Student objects as well as our implementation of PriorityQueue,
+    * MyPriorityQueue.
+    */
     @Override
-    public int compareTo(Student s) {
-        float priority = this.gpa * 0.3F + this.unitsTaken * 0.7F;
-        return compare(priority, s.getPriority());
-    }
-
-    @Override
-    public int compare(Float o1, Float o2) {
-        return Float.compare(o1, o2);
+    public int compareTo(@NotNull Student s) {
+        return Float.compare(this.getPriority(), s.getPriority());
     }
 }
