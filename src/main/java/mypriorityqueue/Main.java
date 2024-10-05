@@ -5,8 +5,6 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to MyPriorityQueue implementation");
-        QueueCommandInvoker commandInvoker = new QueueCommandInvoker();
-
         PriorityOrderStrategy priorityOrder = new PriorityOrderStrategy(new MinStrategy());
         StudentPriorityQueue studentPriorityQ = new StudentPriorityQueue(priorityOrder.applyPriority());
         priorityOrder.setPriorityOrder(new MaxStrategy());
@@ -21,20 +19,23 @@ public class Main {
         Student[] studentList = {hanna, jesse, adam, bob, chris};
 
         for (Student student: studentList) {
-            QueueCommand addElementCommand = new AddElementCommand(studentPriorityQ, student);
-            commandInvoker.executeOperation(addElementCommand);
+            Student result = studentPriorityQ.insert(student);
+            System.out.println("Inserted: " + result);
         }
+
         for (Student student: studentList) {
-            Objects.requireNonNull(studentPriorityQ.poll()).printStudent();
+            Student result = studentPriorityQ.remove();
+            System.out.println("Removed: " + result);
         }
 
 
         for (Student student: studentList) {
-            QueueCommand addElementCommand = new AddElementCommand(studentPriorityQ2, student);
-            commandInvoker.executeOperation(addElementCommand);
+            Student result = studentPriorityQ.insert(student);
+            System.out.println("Inserted: " + result);
         }
         for (Student student: studentList) {
-            Objects.requireNonNull(studentPriorityQ2.poll()).printStudent();
+            Student result = studentPriorityQ.remove();
+            System.out.println("Removed: " + result);
         }
     }
 

@@ -25,11 +25,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Collections;
 import java.util.PriorityQueue;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LabRequirementTests {
-    StudentPriorityQueue studentPriorityQ = new StudentPriorityQueue();
+    PriorityOrderStrategy priorityOrder = new PriorityOrderStrategy(new MaxStrategy());
+    StudentPriorityQueue studentPriorityQ = new StudentPriorityQueue(priorityOrder.applyPriority());
     PriorityQueue<Integer> myPriorityQ = new PriorityQueue<>(Collections.reverseOrder());
 
     Student s1 = new Student("s1", 1, "s1@sdsu.edu", 1.1F, 50);
@@ -100,7 +102,8 @@ class LabRequirementTests {
     // There is an issue in keeping priority order with the order of Student objects added to Q
     //
     @Test
-    void addingAndRemovingStudentsWithSamePriorityTest() {
+    void addingAndRemovingStudentsWithSamePriorityMaxPriorityTest() throws InterruptedException {
+        StudentPriorityQueue studentPriorityQ2 = new StudentPriorityQueue(priorityOrder.applyPriority());
         Student s1 = new Student("s1", 1, "s1@sdsu.edu", 1.0F, 100);
         Student s2 = new Student("s2", 2, "s2@sdsu.edu", 1.0F, 100);
         Student s3 = new Student("s3", 2, "s2@sdsu.edu", 1.0F, 100);
@@ -111,34 +114,46 @@ class LabRequirementTests {
         Student s8 = new Student("s8", 2, "s2@sdsu.edu", 1.0F, 100);
         Student s9 = new Student("s9", 2, "s2@sdsu.edu", 1.0F, 100);
         Student s10 = new Student("s10", 2, "s2@sdsu.edu", 1.0F, 100);
-        studentPriorityQ.offer(s1);
-        studentPriorityQ.offer(s2);
-        studentPriorityQ.offer(s3);
-        studentPriorityQ.offer(s4);
-        studentPriorityQ.offer(s5);
-        studentPriorityQ.offer(s6);
-        studentPriorityQ.offer(s7);
-        studentPriorityQ.offer(s8);
-        studentPriorityQ.offer(s9);
-        studentPriorityQ.offer(s10);
-        studentPriorityQ.printQueuePriorities();
-        assert studentPriorityQ.peek() != null;
-        assertEquals("s1", studentPriorityQ.peek().getName());
-        studentPriorityQ.poll();
-        assert studentPriorityQ.peek() != null;
-        assertEquals("s2", studentPriorityQ.peek().getName());
-        studentPriorityQ.poll();
-        assert studentPriorityQ.peek() != null;
-        assertEquals("s3", studentPriorityQ.peek().getName());
-        studentPriorityQ.poll();
-        assert studentPriorityQ.peek() != null;
-        assertEquals("s4", studentPriorityQ.peek().getName());
-        studentPriorityQ.poll();
-        assert studentPriorityQ.peek() != null;
-        assertEquals("s5", studentPriorityQ.peek().getName());
-        studentPriorityQ.poll();
+        Student[] studentList = {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10};
+        for (Student student: studentList) {
+            studentPriorityQ2.insert(student);
+            TimeUnit.NANOSECONDS.sleep(1);
+        }
+
+        for (Student student: studentList) {
+            Student result = studentPriorityQ2.remove();
+            assertEquals(student.getName(), result.getName());
+        }
     }
 
+    // Adding removing Students with the same priority
+    // There is an issue in keeping priority order with the order of Student objects added to Q
+    //
+    @Test
+    void addingAndRemovingStudentsWithSamePriorityMinPriorityTest() throws InterruptedException {
+        priorityOrder.setPriorityOrder(new MinStrategy());
+        Student s1 = new Student("s1", 1, "s1@sdsu.edu", 1.0F, 100);
+        Student s2 = new Student("s2", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s3 = new Student("s3", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s4 = new Student("s4", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s5 = new Student("s5", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s6 = new Student("s6", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s7 = new Student("s7", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s8 = new Student("s8", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s9 = new Student("s9", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student s10 = new Student("s10", 2, "s2@sdsu.edu", 1.0F, 100);
+        Student[] studentList = {s10, s9, s8, s7, s6, s5, s4, s3, s2, s1};
+        for (Student student: studentList) {
+            studentPriorityQ.insert(student);
+            TimeUnit.NANOSECONDS.sleep(1);
+        }
+        assert studentPriorityQ.peek() != null;
+
+        for (Student student: studentList) {
+            Student result = studentPriorityQ.remove();
+            assertEquals(student.getName(), result.getName());
+        }
+    }
     // Pass if exception is detected for GPA is above 4.0 or under 0
     @Test
     void outOfRangeGPATest() {
@@ -164,19 +179,4 @@ class LabRequirementTests {
         assertEquals((s1.getGpa() * 0.3F + s1.getUnitsTaken() * 0.7F), priority);
     }
 
-    // Test to verify calculation of student priority, queueCalculatePriority,
-    // defined in StudentPriorityClass
-    @Test
-    void calculateQueuePriorityTest() {
-        assertEquals(s1.getGpa() * 0.3f + s1.getUnitsTaken() * 0.7f,
-                studentPriorityQ.queueCalculatePriority(s1));
-        assertEquals(s2.getGpa() * 0.3f + s2.getUnitsTaken() * 0.7f,
-                studentPriorityQ.queueCalculatePriority(s2));
-        assertEquals(s3.getGpa() * 0.3f + s3.getUnitsTaken() * 0.7f,
-                studentPriorityQ.queueCalculatePriority(s3));
-        assertEquals(s4.getGpa() * 0.3f + s4.getUnitsTaken() * 0.7f,
-                studentPriorityQ.queueCalculatePriority(s4));
-        assertEquals(s5.getGpa() * 0.3f + s5.getUnitsTaken() * 0.7f,
-                studentPriorityQ.queueCalculatePriority(s5));
-    }
 }
