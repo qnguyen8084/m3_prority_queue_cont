@@ -17,6 +17,7 @@ import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,10 +36,10 @@ class StudentTest {
         System.setOut(originalOut);
     }
 
-    Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120);
-    Student jesse = new Student("jesse", 1234, "jesse@sdsu.edu", 3.3F, 120);
-    Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120);
-    Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120);
+    Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120, Instant.now());
+    Student jesse = new Student("jesse", 1234, "jesse@sdsu.edu", 3.3F, 120, Instant.now());
+    Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120, Instant.now());
+    Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120, Instant.now());
 
 
     // Test to get calculation of priority of Student class
@@ -54,7 +55,7 @@ class StudentTest {
     @Test
     void printStudentTest() {
         hanna.printStudent();
-        assertEquals("Name: hanna redID: 123 priority: 84.99", test.toString().strip());
+        assertTrue(test.toString().strip().contains("Name: hanna redID: 123 priority: 84.99 Insertion Time: "));
     }
 
     // Test compareTo implementation
@@ -63,8 +64,8 @@ class StudentTest {
     // 3. hanna should have higher priority than chris, so we expect 1
     @Test
     void compareToTest() {
-        assertEquals(hanna.compareTo(jesse), 0);
-        assertEquals(hanna.compareTo(adam), -1);
-        assertEquals(hanna.compareTo(chris), 1);
+        assertEquals(0, hanna.compareTo(jesse));
+        assertEquals(-1, hanna.compareTo(adam));
+        assertEquals(1, hanna.compareTo(chris));
     }
 }
