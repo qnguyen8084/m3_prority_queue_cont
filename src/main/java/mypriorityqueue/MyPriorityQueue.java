@@ -1,10 +1,12 @@
 /*
  * Quy Nguyen
  * CS635
- * Lab01 - Priority Queue
- * 9/9/24
+ * M3 - Priority Queue (continued)
+ * 10/7/2024
  * MyPriorityQueue.java
- *
+ */
+
+/*
  *  This is my implementation of a priority Queue using Binary Heaps. It would not have been possible without all the
  *  resources available online. Some of the algorithm may look similar, but I have adapted it for the purposes of this
  *  Lab. We will go over some design chooses that I made in order of the Key Feature areas specified in the lab

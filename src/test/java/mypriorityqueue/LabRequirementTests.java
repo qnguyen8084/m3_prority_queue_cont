@@ -1,9 +1,9 @@
 /*
  * Quy Nguyen
  * CS635
- * Lab01 - Priority Queue
- * 9/9/24
- * LabRequirementsTests.java
+ * M3 - Priority Queue (continued)
+ * 10/7/2024
+ * LabRequirementTests.java
  */
 
 /*
@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -74,30 +75,6 @@ class LabRequirementTests {
         assertEquals(21, myPriorityQ.peek());
     }
 
-    // Adding and removing students with different priorities
-//    @Test
-//    void removingDifferentPrioritiesTest() {
-//        int nextPriority;
-//        for(int i = 0; i < 20; i++) {
-//            myPriorityQ.offer((int) (Math.random() * (100)));
-//        }
-//        for(int i = 0; i < 20; i++) {
-//            if(myPriorityQ.queue.size() > 1) {
-//                if(myPriorityQ.queue.size() <= 2) {
-//                    nextPriority = myPriorityQ.queue.get(1);
-//                } else if (myPriorityQ.queue.get(1) >= myPriorityQ.queue.get(2)) {
-//                    nextPriority = myPriorityQ.queue.get(1);
-//                } else {
-//                    nextPriority = myPriorityQ.queue.get(2);
-//                }
-//            } else {
-//                break;
-//            }
-//            myPriorityQ.poll();
-//            assertEquals(nextPriority, myPriorityQ.peek());
-//        }
-//    }
-
     // Adding removing Students with the same priority
     // There is an issue in keeping priority order with the order of Student objects added to Q
     //
@@ -120,10 +97,20 @@ class LabRequirementTests {
             TimeUnit.NANOSECONDS.sleep(1);
         }
 
+        System.setOut(originalOut);
+
+        Iterator<Student> iterator = studentPriorityQ2.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            student.printStudent();
+        }
+
         for (Student student: studentList) {
-            Student result = studentPriorityQ2.remove();
+            Student result = studentPriorityQ2.poll();
             assertEquals(student.getName(), result.getName());
         }
+
+
     }
 
     // Adding removing Students with the same priority
@@ -149,10 +136,19 @@ class LabRequirementTests {
         }
         assert studentPriorityQ.peek() != null;
 
+        System.setOut(originalOut);
+
+        Iterator<Student> iterator = studentPriorityQ.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            student.printStudent();
+        }
+
         for (Student student: studentList) {
-            Student result = studentPriorityQ.remove();
+            Student result = studentPriorityQ.poll();
             assertEquals(student.getName(), result.getName());
         }
+
     }
     // Pass if exception is detected for GPA is above 4.0 or under 0
     @Test
@@ -179,4 +175,40 @@ class LabRequirementTests {
         assertEquals((s1.getGpa() * 0.3F + s1.getUnitsTaken() * 0.7F), priority);
     }
 
+    @Test
+    void transferedFromMain() {
+
+        PriorityOrderStrategy priorityOrder = new PriorityOrderStrategy(new MinStrategy());
+        StudentPriorityQueue studentPriorityQ = new StudentPriorityQueue(priorityOrder.applyPriority());
+        priorityOrder.setPriorityOrder(new MaxStrategy());
+        StudentPriorityQueue studentPriorityQ2 = new StudentPriorityQueue(priorityOrder.applyPriority());
+
+        Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120);
+        Student jesse = new Student("jesse", 1234, "hanna@sdsu.edu", 3.3F, 120);
+        Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120);
+        Student bob = new Student("bob", 123, "bob@sdsu.edu", 3.3F, 121);
+        Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120);
+
+        Student[] studentList = {hanna, jesse, adam, bob, chris};
+
+        for (Student student: studentList) {
+            boolean result = studentPriorityQ.insert(student);
+            System.out.println("Inserted: " + result);
+        }
+
+        for (Student student: studentList) {
+            Student result = studentPriorityQ.remove();
+            System.out.println("Removed: " + result);
+        }
+
+
+        for (Student student: studentList) {
+            boolean result = studentPriorityQ2.insert(student);
+            System.out.println("Inserted: " + result);
+        }
+        for (Student student: studentList) {
+            Student result = studentPriorityQ2.remove();
+            System.out.println("Removed: " + result);
+        }
+    }
 }
