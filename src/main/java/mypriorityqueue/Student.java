@@ -1,8 +1,8 @@
 /*
  * Quy Nguyen
  * CS635
- * Lab01 - Priority Queue
- * 9/9/24
+ * M3 - Priority Queue (continued)
+ * 10/7/2024
  * Student.java
  */
 
@@ -23,7 +23,8 @@ public class Student implements Comparable<Student> {
     identifier: name    data-type: String
     identifier: redID   data-type: int
     identifier: email   data-type: String
-    identifier: gpa     data-type: unitsTaken
+    identifier: gpa     data-type: float
+    identifier: unitsTaken data-type: int
     identifier: priority data-type: float
     */
     private final String name;
@@ -31,61 +32,35 @@ public class Student implements Comparable<Student> {
     private final String email;
     private final float gpa;
     private final int unitsTaken;
+    private final float priority;
     private Instant insertionTime;
 
     // Constructor for Student class
     // Assigns data to members and also checks for ranges of gpa and unitsTaken.
     // TODO: May be a lot of improvements here
     // TODO: Add more data validation
-    public Student(String name, int redID, String email, float gpa, int unitsTaken) throws ArithmeticException {
-        // Assigns input parameters to respective variables for when Student object12 is instantiated.
+    public Student(String name, int redID, String email, float gpa, int unitsTaken) {
+        if (gpa < 0F || gpa > 4.0F) throw new ArithmeticException("GPA must be between 0 and 4.0.");
+        if (unitsTaken < 0 || unitsTaken > 150)
+            throw new ArithmeticException("Units Taken must be between 0 and 150.");
         this.name = name;
         this.redID = redID;
         this.email = email;
         this.gpa = gpa;
-        if (this.gpa < 0F || this.gpa > 4.0F) {
-            try {
-                throw new ArithmeticException();
-            } catch (ArithmeticException e) {
-                System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");
-                throw new ArithmeticException();
-            }
-        }
         this.unitsTaken = unitsTaken;
-        if (this.unitsTaken < 0 || this.unitsTaken > 150) {
-            try {
-                throw new ArithmeticException();
-            } catch (ArithmeticException e) {
-                System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");
-                throw new ArithmeticException();
-            }
-        }
+        this.priority = calculatePriority();
     }
 
-    public Student(String name, int redID, String email, float gpa, int unitsTaken, Instant insertionTime) throws ArithmeticException {
-        // Assigns input parameters to respective variables for when Student object12 is instantiated.
+    public Student(String name, int redID, String email, float gpa, int unitsTaken, Instant insertionTime) {
+        if (gpa < 0F || gpa > 4.0F) throw new ArithmeticException("GPA must be between 0 and 4.0.");
+        if (unitsTaken < 0 || unitsTaken > 150) throw new ArithmeticException("Units Taken must be between 0 and 150.");
         this.name = name;
         this.redID = redID;
         this.email = email;
         this.gpa = gpa;
         this.insertionTime = insertionTime;
-        if (this.gpa < 0F || this.gpa > 4.0F) {
-            try {
-                throw new ArithmeticException();
-            } catch (ArithmeticException e) {
-                System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");
-                throw new ArithmeticException();
-            }
-        }
         this.unitsTaken = unitsTaken;
-        if (this.unitsTaken < 0 || this.unitsTaken > 150) {
-            try {
-                throw new ArithmeticException();
-            } catch (ArithmeticException e) {
-                System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");
-                throw new ArithmeticException();
-            }
-        }
+        this.priority = calculatePriority();
     }
 
     public void setInsertionTime(Instant insertionTime) {
@@ -130,17 +105,16 @@ public class Student implements Comparable<Student> {
 
     // Method to print a name and redID of Student object.
     // Used for printing out students in priority order or just a single entry.
+    // It is currently used somewhere and needs to be deleted soon.
     void printStudent() {
         System.out.println(this);
     }
 
-    /* This is needed for natural ordering of Student objects as well as our implementation of PriorityQueue,
-    * MyPriorityQueue.
-    */
-//    @Override
-//    public int compareTo(@NotNull Student s) {
-//        return Float.compare(this.getPriority(), s.getPriority());
-//    }
+
+    /* Redefining or overriding the Comparable.compareTo. Doing this establishes the natural ordering for
+     * our Student class. It will be used in either our custom implementation of PriorityQueue or the one
+     * provided by Java Collections Library
+     */
 
     @Override
     public int compareTo(@NotNull Student s) {
